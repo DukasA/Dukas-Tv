@@ -4,7 +4,7 @@ import NavLink from './NavLink';
 
 export const Header: React.FC = () => {
   return (
-    <div className="max-h-[125px] z-10 p-10 pr-20 pl-20 flex justify-between items-center absolute top-0 left-0 w-[100%]">
+    <div className="max-h-[125px] z-10 p-10 pr-20 pl-20 flex justify-between items-center absolute top-0 left-0 w-[100%] flex-col md:flex-row">
       <div className="flex justify-between items-center">
         <div>
           <span className="text-[24px] text-white font-semibold">
@@ -13,8 +13,8 @@ export const Header: React.FC = () => {
         </div>
       </div>
       <div>
-        <nav className="ml-20 flex justify-between items-center">
-          <ul className="flex justify-between items-center">
+        <nav className="ml-20 flex justify-between items-center flex-col sm:flex-row">
+          <ul className="flex justify-between items-center flex-col sm:flex-row">
             <NavLink title="Movies" link={'/Movies'} />
             <NavLink title="Series" link={'/Series'} />
             <NavLink title="Cartoons" link={'/Cartoons'} />
