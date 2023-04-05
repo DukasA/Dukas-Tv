@@ -1,4 +1,5 @@
 import React from 'react';
+import StarRatings from 'react-star-ratings';
 import BannerSlideBtn from '../Buttons/BannerSlideBtn';
 
 interface ISlideProps {
@@ -27,7 +28,7 @@ export const BannerSlide: React.FC<ISlideProps> = ({
         <span className="text-center text-gray-300 text-5xl md:text-5xl mb-6 md:m-0">
           {title}
         </span>
-        <div className="flex justify-between items-center">
+        <div className="">
           {genres.map((genre) => (
             <span className="text-gray-400 text-sm mr-2 md:text-md md:mr-4">
               {genre},
@@ -42,8 +43,17 @@ export const BannerSlide: React.FC<ISlideProps> = ({
         </div>
         <div className="flex justify-between items-center">
           <BannerSlideBtn movieUrl={movieUrl} />
-          <div className="text-white w-full flex justify-center items-center">
-            <span className="text-gray-300 text-lg pt-9">Rating: {rating}</span>
+          <div className="text-white w-full flex flex-col ml-5 md:ml-10 justify-center items-center">
+            <span className="text-gray-300 text-xl pt-9">Rating: {rating}</span>
+            <StarRatings
+              rating={4}
+              starRatedColor="#1F80E0"
+              starEmptyColor="gray"
+              numberOfStars={5}
+              name="rating"
+              starDimension="30px"
+              starSpacing="0px"
+            />
           </div>
         </div>
       </div>
