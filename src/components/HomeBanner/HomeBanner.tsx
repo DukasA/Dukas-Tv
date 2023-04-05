@@ -7,7 +7,6 @@ export const HomeBanner: React.FC = () => {
       className={`w-full h-[80vh] shadow-[0px_22px_30px_4px_rgba(0,0,0,0.56)]`}
     >
       <BannerSlide
-        /* imageUrl="https://images7.alphacoders.com/128/1287966.jpg" */
         imageUrl="../../../images/banner.jpg"
         movieUrl="/"
         title="The Last of Us"
