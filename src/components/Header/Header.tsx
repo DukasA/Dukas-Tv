@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
       <div className="flex justify-between items-center">
         <div>
           <span className="text-[24px] text-white font-semibold">
-            <Link to="/">Dukas Tv</Link>
+            <Link to="/">Dukas Tv v2</Link>
           </span>
         </div>
       </div>
