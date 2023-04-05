@@ -25,7 +25,7 @@ export const CarouselBlock: React.FC = () => {
   };
 
   return (
-    <Carousel partialVisible={true} responsive={responsive} className="p-4">
+    <Carousel partialVisible={true} responsive={responsive} className="ml-2">
       <MovieListCard
         genres={['Action', 'Fantasy', 'Family']}
         title="Avatar"

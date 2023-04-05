@@ -14,7 +14,7 @@ export const MovieListCard: React.FC<ICardProps> = ({
   metaInformation,
 }) => {
   return (
-    <div className="w-auto">
+    <div className="w-auto mr-2">
       <div className="rounded-lg overflow-hidden">
         <img src={imgUrl} alt={title} className="w-full h-80 object-cover" />
         <div className="p-2">

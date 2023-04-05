@@ -51,7 +51,7 @@ export const BannerSlide: React.FC<ISlideProps> = ({
               starEmptyColor="gray"
               numberOfStars={5}
               name="rating"
-              starDimension="30px"
+              starDimension="28px"
               starSpacing="0px"
             />
           </div>
