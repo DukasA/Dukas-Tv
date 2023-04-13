@@ -3,7 +3,18 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MovieListCard from './MovieListCard';
 
-export const CarouselBlock: React.FC = () => {
+interface IMovies {
+  id: number;
+  title: string;
+  release_date: string;
+  backdrop_path: string;
+}
+
+interface IMovieList {
+  movies: IMovies[];
+}
+
+export const CarouselBlock: React.FC<IMovieList> = ({ movies }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -26,48 +37,9 @@ export const CarouselBlock: React.FC = () => {
 
   return (
     <Carousel partialVisible={true} responsive={responsive} className="ml-2">
-      <MovieListCard
-        genres={['Action', 'Fantasy', 'Family']}
-        title="Avatar"
-        imgUrl="https://fwcdn.pl/fpo/91/13/299113/8028716.3.jpg"
-        metaInformation="USA, 2010"
-      />
-      <MovieListCard
-        genres={['Action', 'Fantasy', 'Family']}
-        title="Avatar"
-        imgUrl="https://fwcdn.pl/fpo/91/13/299113/8028716.3.jpg"
-        metaInformation="USA, 2010"
-      />
-      <MovieListCard
-        genres={['Action', 'Fantasy', 'Family']}
-        title="Avatar"
-        imgUrl="https://fwcdn.pl/fpo/91/13/299113/8028716.3.jpg"
-        metaInformation="USA, 2010"
-      />
-      <MovieListCard
-        genres={['Action', 'Fantasy', 'Family']}
-        title="Avatar"
-        imgUrl="https://fwcdn.pl/fpo/91/13/299113/8028716.3.jpg"
-        metaInformation="USA, 2010"
-      />
-      <MovieListCard
-        genres={['Action', 'Fantasy', 'Family']}
-        title="Avatar"
-        imgUrl="https://fwcdn.pl/fpo/91/13/299113/8028716.3.jpg"
-        metaInformation="USA, 2010"
-      />
-      <MovieListCard
-        genres={['Action', 'Fantasy', 'Family']}
-        title="Avatar"
-        imgUrl="https://fwcdn.pl/fpo/91/13/299113/8028716.3.jpg"
-        metaInformation="USA, 2010"
-      />
-      <MovieListCard
-        genres={['Action', 'Fantasy', 'Family']}
-        title="Avatar"
-        imgUrl="https://fwcdn.pl/fpo/91/13/299113/8028716.3.jpg"
-        metaInformation="USA, 2010"
-      />
+      {movies.map((movie) => (
+        <MovieListCard movie={movie} />
+      ))}
     </Carousel>
   );
 };
