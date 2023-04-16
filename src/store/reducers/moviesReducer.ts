@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IMovie {
   movie: {
@@ -21,7 +21,7 @@ export const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    load: (state, action) => {
+    load: (state, action: PayloadAction<IMovie[]>) => {
       state.movies = action.payload; /* .filter(
         (movie: any) => movie.media_type === 'tv',
       ); */
