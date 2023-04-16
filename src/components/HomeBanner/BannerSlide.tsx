@@ -30,7 +30,10 @@ export const BannerSlide: React.FC<ISlideProps> = ({
         </span>
         <div className="">
           {genres.map((genre) => (
-            <span className="text-gray-400 text-sm mr-2 md:text-md md:mr-4">
+            <span
+              className="text-gray-400 text-sm mr-2 md:text-md md:mr-4"
+              key={genre}
+            >
               {genre},
             </span>
           ))}
