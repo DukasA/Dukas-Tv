@@ -1,20 +1,10 @@
 import React from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import MovieListCard from './MovieListCard';
+import { useSelector } from 'react-redux';
+import MovieListCard from '../MovieCard/MovieListCard';
 
-interface IMovies {
-  id: number;
-  title: string;
-  release_date: string;
-  backdrop_path: string;
-}
-
-interface IMovieList {
-  movies: IMovies[];
-}
-
-export const CarouselBlock: React.FC<IMovieList> = ({ movies }) => {
+export const CarouselBlock: React.FC = () => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -31,14 +21,16 @@ export const CarouselBlock: React.FC<IMovieList> = ({ movies }) => {
     },
     mobile: {
       breakpoint: { max: 750, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
 
+  const movies = useSelector((state: any) => state.movies.movies);
+
   return (
     <Carousel partialVisible={true} responsive={responsive} className="ml-2">
-      {movies.map((movie) => (
-        <MovieListCard movie={movie} />
+      {movies.map((movie: any) => (
+        <MovieListCard movie={movie} key={movie.title} />
       ))}
     </Carousel>
   );
