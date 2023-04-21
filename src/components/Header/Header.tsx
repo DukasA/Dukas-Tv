@@ -35,10 +35,9 @@ export const Header: React.FC = () => {
             <NavLink title="Movies" type="noDropDown" link={'/movies'} />
             <NavLink title="Series" type="noDropDown" link={'/series'} />
             <NavLink title="Cartoons" type="noDropDown" link={'/cartoons'} />
-            <NavLink title="Anime" type="noDropDown" link={'/anime'} />
           </ul>
           <ul className="flex justify-between items-center">
-            <NavLink title="Subscribe" type="subscribe" link={'/Subscribe'} />
+            <NavLink title="Subscribe" type="subscribe" link={'/subscribe'} />
             <NavLink title="LOG IN" type="login" link={'/login'} />
           </ul>
         </nav>
@@ -74,12 +73,6 @@ export const Header: React.FC = () => {
                 title="Cartoons"
                 type="noDropDown"
                 link={'/Cartoons'}
-                onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
-              />
-              <NavLink
-                title="Anime"
-                type="noDropDown"
-                link={'/Anime'}
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
             </ul>
