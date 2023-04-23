@@ -22,9 +22,7 @@ export const moviesSlice = createSlice({
   initialState,
   reducers: {
     load: (state, action: PayloadAction<IMovie[]>) => {
-      state.movies = action.payload; /* .filter(
-        (movie: any) => movie.media_type === 'tv',
-      ); */
+      state.movies = action.payload;
     },
   },
 });
