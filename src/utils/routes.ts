@@ -1,6 +1,7 @@
 import AnimePage from '../pages/AnimePage';
 import CartoonsPage from '../pages/CartoonsPage';
 import HomePage from '../pages/HomePage';
+import MovieDetailsPage from '../pages/MovieDetailsPage';
 import MoviesPage from '../pages/MoviesPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import SeriesPage from '../pages/SeriesPage';
@@ -9,6 +10,7 @@ import {
   CARTOONS_ROUTE,
   HOME_ROUTE,
   MOVIES_ROUTE,
+  MOVIE_DETAILS_ROUTE,
   NOT_FOUND_ROUTE,
   SERIES_ROUTE,
 } from './routesConsts';
@@ -37,5 +39,9 @@ export const publicRoutes = [
   {
     path: ANIME_ROUTES,
     Component: AnimePage,
+  },
+  {
+    path: MOVIE_DETAILS_ROUTE,
+    Component: MovieDetailsPage,
   },
 ];
