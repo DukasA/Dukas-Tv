@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router'; /*  */
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { getMovieById } from '../api/fetchData/movies/getMovieById';
 import { ActorCard } from '../components/ActorCard/ActorCard';
 
@@ -53,8 +54,14 @@ const MovieDetailsPage: React.FC = () => {
     }
   };
 
+  const navigation = useNavigate();
+
   if (!data) {
-    return <div>Loading</div>;
+    return (
+      <div className="flex justify-center items-center">
+        <h1 className="text-3xl text-white">LOADING ...</h1>
+      </div>
+    );
   }
 
   return (
@@ -65,8 +72,14 @@ const MovieDetailsPage: React.FC = () => {
           'w-full h-full md:h-[80vh] shadow-[0px_22px_30px_4px_rgba(0,0,0,0.56)]'
         }
       >
+        <div
+          className="absolute top-5 left-5 md:top-20 md:left-20 z-50 rounded-full overflow-hidden opacity-70 hover:opacity-100 hover:cursor-pointer"
+          onClick={() => navigation(-1)}
+        >
+          <img src="../../icons/back-button.svg" className="w-10 h-10" />
+        </div>
         <div className="w-full h-[80vh] relative">
-          <div className=" bg-black/[0.8] w-full h-full absolute top-0 left-0 z-1"></div>
+          <div className=" bg-black/[0.4] w-full h-full absolute top-0 left-0 z-1"></div>
           <img
             src={getPathForBackDrop(data.backdrop_path)}
             className="w-full h-full z-0 object-cover"

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="back-button">
+  <g data-name="Layer 2">
+    <path fill="#FFFFFF" d="M20 0H4a4 4 0 0 0-4 4v16a4 4 0 0 0 4 4h16a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4Zm-4.29 17.54a1 1 0 0 1 0 1.42 1 1 0 0 1-1.42 0l-6.36-6.37a.87.87 0 0 1-.22-.35 1 1 0 0 1 0-.73 1 1 0 0 1 .22-.35l6.36-6.37a1 1 0 1 1 1.42 1.42L10 11.88Z" data-name="Layer 1"></path>
+  </g>
+</svg>

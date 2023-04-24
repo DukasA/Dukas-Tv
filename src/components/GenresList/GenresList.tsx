@@ -29,7 +29,13 @@ const GenresList: React.FC<Props> = ({ onClick }) => {
   };
 
   return (
-    <div className="flex justify-between items-center mt-10 mb-10">
+    <div
+      className={
+        location.pathname === '/'
+          ? 'mt-10 mb-10'
+          : 'flex justify-between items-center mt-10 mb-10'
+      }
+    >
       <Title title={location.pathname.slice(1).toUpperCase()} />
       <div>
         <span className="text-white font-semibold text-3xl mr-2">
@@ -38,8 +44,9 @@ const GenresList: React.FC<Props> = ({ onClick }) => {
         <select
           className="bg-[#121212] border-slate-800 p-2 pl-6 pr-6 rounded-xl text-2xl outline-none text-white font-semibold"
           onChange={handleChangeGanre}
+          defaultValue="Genre"
         >
-          <option disabled selected hidden>
+          <option value="Genre" disabled hidden>
             Genre
           </option>
           {genres.map((genre) => (

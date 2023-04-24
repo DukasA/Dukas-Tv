@@ -18,7 +18,6 @@ const CartoonsPage: React.FC = () => {
   const handleGenreChange = async (genre: string) => {
     const response = await fetchCartoonsByGenre(genre);
     dispatch(load(response.data.results));
-    console.log(response.data.results);
   };
 
   return (

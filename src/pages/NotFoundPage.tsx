@@ -12,7 +12,7 @@ export const NotFoundPage: React.FC = () => {
         </li>
         <li
           onClick={() => navigation(-1)}
-          className="text-xl text-white opacity-[0.8] underline"
+          className="text-xl text-white opacity-[0.8] underline hover:cursor-pointer"
         >
           Go Back
         </li>

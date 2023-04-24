@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation } from 'react-router';
 import AppRouter from './AppRouter';
 
@@ -8,7 +7,7 @@ export const Layout: React.FC = () => {
   return (
     <div
       className={
-        location.pathname === '/' || '/movie/'
+        location.pathname === '/' || location.pathname.startsWith('/movie/')
           ? 'w-full min-h-[100vh]'
           : 'w-full min-h-[100vh] pt-[50px] md:pt-[125px]'
       }

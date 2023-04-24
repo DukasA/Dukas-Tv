@@ -10,3 +10,21 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+/* Стилизация скролл бара */
+::-webkit-scrollbar {
+  width: 10px; /* Ширина скролл бара */
+  background-color: #1a1a1a; /* Цвет фона скролл бара */
+}
+
+/* Стилизация ползунка скролл бара */
+::-webkit-scrollbar-thumb {
+  background-color: #444; /* Цвет ползунка скролл бара */
+  border-radius: 10px; /* Радиус скругления углов ползунка */
+  border: 2px solid #1a1a1a; /* Отступы и цвет рамки ползунка */
+}
+
+/* Стилизация кнопки навигации скролл бара */
+::-webkit-scrollbar-button {
+  display: none; /* Скрыть кнопку навигации скролл бара */
+}

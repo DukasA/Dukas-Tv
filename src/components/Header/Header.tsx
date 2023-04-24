@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NavLink from './NavLink';
 
 export const Header: React.FC = () => {
@@ -10,8 +10,16 @@ export const Header: React.FC = () => {
     setIsMobileHeaderVisible(!isMobileHeaderVisible);
   };
 
+  const location = useLocation();
+
   return (
-    <div className="max-h-[125px] z-10 p-10 lg:pr-20 lg:pl-20 flex justify-between items-center absolute top-0 left-0 w-[100%] flex-col md:flex-row">
+    <div
+      className={
+        location.pathname.startsWith('/movie/')
+          ? 'hidden'
+          : 'max-h-[125px] z-10 p-10 lg:pr-20 lg:pl-20 flex justify-between items-center absolute top-0 left-0 w-full flex-col md:flex-row'
+      }
+    >
       <div className="w-full flex justify-between items-center">
         <div>
           <span className="text-xl md:text-2xl lg:text-3xl text-white font-semibold">
