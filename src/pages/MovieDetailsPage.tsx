@@ -40,6 +40,7 @@ const MovieDetailsPage: React.FC = () => {
         setData(res.data);
       });
     }
+    window.scrollTo(0, 0);
   }, []);
 
   console.log(data);
