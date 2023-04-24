@@ -1,17 +1,9 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
+import { IBannerSlideProps } from '../../interfaces/BannerSlideProps';
 import BannerSlideBtn from '../Buttons/BannerSlideBtn';
 
-interface ISlideProps {
-  imageUrl: string;
-  movieUrl: string;
-  title: string;
-  genres: string[];
-  duration: string;
-  rating: string;
-}
-
-export const BannerSlide: React.FC<ISlideProps> = ({
+export const BannerSlide: React.FC<IBannerSlideProps> = ({
   imageUrl,
   movieUrl,
   title,

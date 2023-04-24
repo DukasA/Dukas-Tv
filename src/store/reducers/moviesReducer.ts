@@ -1,16 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface IMovie {
-  movie: {
-    id: number;
-    title: string;
-    release_date: string;
-    backdrop_path: string;
-  };
-}
+import { IMovieCardProps } from '../../interfaces/MovieCardProps';
 
 interface IMovies {
-  movies: IMovie[];
+  movies: IMovieCardProps[];
 }
 
 const initialState: IMovies = {
@@ -21,7 +13,7 @@ export const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    load: (state, action: PayloadAction<IMovie[]>) => {
+    load: (state, action: PayloadAction<IMovieCardProps[]>) => {
       state.movies = action.payload;
     },
   },

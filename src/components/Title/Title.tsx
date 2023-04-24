@@ -1,8 +1,5 @@
 import React from 'react';
-
-interface ITitleProps {
-  title: string;
-}
+import { ITitleProps } from '../../interfaces/TitleProps';
 
 const Title: React.FC<ITitleProps> = ({ title }) => {
   return (

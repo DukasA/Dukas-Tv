@@ -1,12 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router';
+import { IGenresListProps } from '../../interfaces/GenresListProps';
 import Title from '../Title/Title';
 
-interface Props {
-  onClick: (genre: string) => Promise<void>;
-}
-
-const GenresList: React.FC<Props> = ({ onClick }) => {
+const GenresList: React.FC<IGenresListProps> = ({ onClick }) => {
   const genres = [
     {
       id: 28,

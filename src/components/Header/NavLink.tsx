@@ -1,12 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-interface ILinkProps {
-  type?: string;
-  title: string;
-  link: string;
-  onClick?: () => void;
-}
+import { ILinkProps } from '../../interfaces/NavLinkProps';
 
 export const NavLink: React.FC<ILinkProps> = ({
   title,

@@ -1,14 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-interface IMovie {
-  movie: {
-    id: number;
-    title: string;
-    release_date: string;
-    backdrop_path: string;
-  };
-}
+import { IMovieCardProps } from '../../interfaces/MovieCardProps';
 
 const getPathForImage = (path: string) => {
   if (!path) {
@@ -18,7 +10,7 @@ const getPathForImage = (path: string) => {
   }
 };
 
-export const MovieListCard: React.FC<IMovie> = ({ movie }) => {
+export const MovieListCard: React.FC<IMovieCardProps> = ({ movie }) => {
   return (
     <Link to={`/movie/` + movie.id}>
       <div className="w-[160px] sm:mr-2 md:w-auto" key={movie.id}>

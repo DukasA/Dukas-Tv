@@ -1,12 +1,5 @@
 import React from 'react';
-
-interface IActorCardProps {
-  actor: {
-    profile_path: string;
-    name: string;
-    character: string;
-  };
-}
+import { IActorCardProps } from '../../interfaces/ActorCardProps';
 
 /* https://www.themoviedb.org/t/p/w138_and_h175_face/3bOGNsHlrswhyW79uvIHH1V43JI.jpg */
 

@@ -1,8 +1,5 @@
 import React from 'react';
-
-interface IBannerBtnProps {
-  movieUrl: string;
-}
+import { IBannerBtnProps } from '../../interfaces/BannerButtonProps';
 
 export const BannerSlideBtn: React.FC<IBannerBtnProps> = ({ movieUrl }) => {
   return (

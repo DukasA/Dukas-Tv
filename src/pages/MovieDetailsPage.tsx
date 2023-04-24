@@ -3,37 +3,12 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { getMovieById } from '../api/fetchData/movies/getMovieById';
 import { ActorCard } from '../components/ActorCard/ActorCard';
-
-interface MovieData {
-  id: number;
-  title: string;
-  poster_path: string;
-  backdrop_path: string;
-  genres: [
-    genre: {
-      id: number;
-      name: string;
-    },
-  ];
-  overview: string;
-  vote_average: number;
-  runtime: number;
-  release_date: string;
-  credits: {
-    cast: [
-      {
-        name: string;
-        profile_path: string;
-        character: string;
-      },
-    ];
-  };
-}
+import { IMovieDetailsProps } from '../interfaces/MovieDetailsProps';
 
 const MovieDetailsPage: React.FC = () => {
   const params = useParams<{ id: string }>();
   const movieId = params.id;
-  const [data, setData] = useState<MovieData | null>(null);
+  const [data, setData] = useState<IMovieDetailsProps | null>(null);
 
   useEffect(() => {
     if (movieId) {
