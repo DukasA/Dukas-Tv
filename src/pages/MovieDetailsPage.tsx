@@ -23,6 +23,7 @@ interface MovieData {
       {
         name: string;
         profile_path: string;
+        character: string;
       },
     ];
   };
@@ -56,32 +57,34 @@ const MovieDetailsPage: React.FC = () => {
   }
 
   return (
-    <div className="absolute top-0 left-0 w-full ">
+    <div className="">
       {/* HERO SECTION */}
       <div
-        className={`w-full h-full md:h-[80vh] shadow-[0px_22px_30px_4px_rgba(0,0,0,0.56)]`}
+        className={
+          'w-full h-full md:h-[80vh] shadow-[0px_22px_30px_4px_rgba(0,0,0,0.56)]'
+        }
       >
-        <div className="w-full h-full relative">
+        <div className="w-full h-[80vh] relative">
           <div className=" bg-black/[0.8] w-full h-full absolute top-0 left-0 z-1"></div>
           <img
             src={getPathForBackDrop(data.backdrop_path)}
             className="w-full h-full z-0 object-cover"
           />
           {/* DESCRIPTION */}
-          <div className="w-full p-10 md:w-[700px] absolute bottom-0 left-0 md:pl-20 md:pr-20 pt-10 pb-10 md:rounded-xl text-white bg-[black]/70">
-            <h1 className="text-3xl md:text-5xl text-[#1F80E0] font-bold mb-5 opacity-[0.9]">
+          <div className="w-full p-5 md:w-[700px] absolute bottom-0 left-0 md:pl-20 md:pr-20 md:rounded-xl text-white bg-[black]/70">
+            <h1 className="text-2xl md:text-5xl text-[#1F80E0] font-bold mb-2 md:mb-5 opacity-[0.9]">
               {data.title}
             </h1>
-            <p className="text-[14px] md:text-lg mb-5 md:mb-10 opacity-[0.9]">
+            <p className="text-[11px] md:text-lg mb-2 md:mb-10 opacity-[0.9]">
               {data.overview}
             </p>
-            <div className="flex items-center mb-3">
+            <div className="flex flex-wrap items-center mb-2 md:mb-10">
               <span className="mr-5 p-2 pt-[2px] pb-[2px] bg-[#1F80E0] rounded-md">
                 {data.runtime} min
               </span>
               <span className="opacity-[0.9]">James Cameron</span>
             </div>
-            <div className="flex flex-wrap items-center mb-3">
+            <div className="flex flex-wrap items-center mb-2 md:mb-10">
               <span className="opacity-[0.9]">
                 {data.release_date.slice(0, 4)}
               </span>
@@ -92,7 +95,7 @@ const MovieDetailsPage: React.FC = () => {
                 <span key={genre.id} className="mr-2 opacity-[0.9]">
                   {data.genres[data.genres.length - 1] === genre
                     ? genre.name
-                    : `${genre.name + ','}`}
+                    : genre.name + ','}
                 </span>
               ))}
             </div>
@@ -108,15 +111,26 @@ const MovieDetailsPage: React.FC = () => {
         </div>
       </div>
       {/* DETAILS SECTION */}
-      <div className="text-zinc-50 ">
+      <div className="text-white p-5 md:p-20 grid grid-cols-1 md:grid-cols-2">
         {/* LEFT SIDE */}
         <div>
-          <h3>Cast</h3>
-          <div className="flex items-center">
-            {data.credits.cast.slice(0, 7).map((actor) => (
-              <ActorCard actor={actor} />
+          <div className="flex justify-between items-center mb-5">
+            <h3>Cast</h3>
+            <div className="flex flex-col text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer">
+              <span className="text-xl">See all</span>
+              <span className="absolute left-9 top-4 text-2xl">&#x2192;</span>
+            </div>
+          </div>
+          <div className="flex flex-wrap">
+            {data.credits.cast.slice(0, 4).map((actor) => (
+              <ActorCard actor={actor} key={actor.profile_path} />
             ))}
           </div>
+        </div>
+        {/* RIGHT SIDE */}
+        <div className="">
+          <h3>Screens</h3>
+          <div className="flex flex-wrap items-center"></div>
         </div>
       </div>
     </div>

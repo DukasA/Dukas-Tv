@@ -8,7 +8,7 @@ export const Layout: React.FC = () => {
   return (
     <div
       className={
-        location.pathname === '/'
+        location.pathname === '/' || '/movie/'
           ? 'w-full min-h-[100vh]'
           : 'w-full min-h-[100vh] pt-[50px] md:pt-[125px]'
       }

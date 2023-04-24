@@ -4,6 +4,7 @@ interface IActorCardProps {
   actor: {
     profile_path: string;
     name: string;
+    character: string;
   };
 }
 
@@ -19,14 +20,15 @@ const getPersonImage = (path: string) => {
 
 export const ActorCard: React.FC<IActorCardProps> = ({ actor }) => {
   return (
-    <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
+    <div className="mx-auto rounded-lg overflow-hidden w-28 mb-5">
       <img
-        className="w-full h-48 object-cover"
+        className="w-full object-cover h-50"
         src={getPersonImage(actor.profile_path)}
         alt={`Photo of ${actor.name}`}
       />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{actor.name}</div>
+      <div className="flex flex-col">
+        <span className="font-bold text-md mb-1 mt-2">{actor.name}</span>
+        <span className="font-bold text-sm opacity-80">{actor.character}</span>
       </div>
     </div>
   );
