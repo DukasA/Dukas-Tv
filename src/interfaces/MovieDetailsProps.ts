@@ -13,6 +13,20 @@ export interface IMovieDetailsProps {
   vote_average: number;
   runtime: number;
   release_date: string;
+  images?: {
+    backdrops: [];
+    logos: [];
+    posters: [];
+  };
+  videos: {
+    results: [
+      {
+        name: string;
+        type: string;
+        key: string;
+      },
+    ];
+  };
   credits: {
     cast: [
       {

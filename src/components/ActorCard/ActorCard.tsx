@@ -13,14 +13,14 @@ const getPersonImage = (path: string) => {
 
 export const ActorCard: React.FC<IActorCardProps> = ({ actor }) => {
   return (
-    <div className="mx-auto rounded-lg overflow-hidden w-28 mb-5">
+    <div className="min-w-[150px] rounded-lg overflow-hidden mr-3 bg-black/25 mb-4">
       <img
-        className="w-full object-cover h-50"
+        className="w-[100%] object-cover"
         src={getPersonImage(actor.profile_path)}
         alt={`Photo of ${actor.name}`}
       />
-      <div className="flex flex-col">
-        <span className="font-bold text-md mb-1 mt-2">{actor.name}</span>
+      <div className="flex flex-col p-2">
+        <span className="font-bold text-md mb-1">{actor.name}</span>
         <span className="font-bold text-sm opacity-80">{actor.character}</span>
       </div>
     </div>

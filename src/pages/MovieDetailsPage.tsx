@@ -1,25 +1,49 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { apiConfig } from '../api/apiConfig';
 import { getMovieById } from '../api/fetchData/movies/getMovieById';
 import { ActorCard } from '../components/ActorCard/ActorCard';
 import { IMovieDetailsProps } from '../interfaces/MovieDetailsProps';
+
+interface ImagesProps {
+  backdrops: [{ file_path: string }];
+  logos: [{ file_path: string }];
+  posters: [{ file_path: string }];
+}
 
 const MovieDetailsPage: React.FC = () => {
   const params = useParams<{ id: string }>();
   const movieId = params.id;
   const [data, setData] = useState<IMovieDetailsProps | null>(null);
+  const [images, setImages] = useState<ImagesProps | null>(null);
 
   useEffect(() => {
     if (movieId) {
-      getMovieById(movieId).then((res) => {
-        setData(res.data);
-      });
+      try {
+        getMovieById(movieId)
+          .then((res) => {
+            setData(res.data);
+            return axios.get(
+              `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiConfig.API_KEY}`,
+            );
+          })
+          .then((response) => {
+            setImages(response.data);
+          });
+      } catch (error) {
+        alert(error);
+      }
     }
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   console.log(data);
+  console.log(images);
 
   const getPathForBackDrop = (path: string) => {
     if (!path) {
@@ -29,9 +53,17 @@ const MovieDetailsPage: React.FC = () => {
     }
   };
 
+  const getPathForPoster = (path: string) => {
+    if (!path) {
+      return 'https://curia.europa.eu/jcms/upload/docs/image/png/2022-07/no_image.png';
+    } else {
+      return `https://www.themoviedb.org/t/p/w220_and_h330_face/${path}`;
+    }
+  };
+
   const navigation = useNavigate();
 
-  if (!data) {
+  if (!data || !images) {
     return (
       <div className="flex justify-center items-center">
         <h1 className="text-3xl text-white">LOADING ...</h1>
@@ -100,26 +132,58 @@ const MovieDetailsPage: React.FC = () => {
         </div>
       </div>
       {/* DETAILS SECTION */}
-      <div className="text-white p-5 md:p-20 grid grid-cols-1 md:grid-cols-2">
+      <div className="text-white p-5 md:p-20 grid grid-cols-2 gap-10">
         {/* LEFT SIDE */}
         <div>
-          <div className="flex justify-between items-center mb-5">
-            <h3>Cast</h3>
-            <div className="flex flex-col text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer">
-              <span className="text-xl">See all</span>
-              <span className="absolute left-9 top-4 text-2xl">&#x2192;</span>
+          {/* CAST */}
+          <div>
+            <div className="flex justify-between items-center mb-5">
+              <h3>Cast</h3>
+              <div className="flex text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer">
+                <span className="text-xl">See all</span>
+                <span className="text-2xl">&#x2192;</span>
+              </div>
+            </div>
+            <div className="flex overflow-auto">
+              {data.credits.cast.slice(0, 15).map((actor) => (
+                <ActorCard actor={actor} key={actor.profile_path} />
+              ))}
             </div>
           </div>
-          <div className="flex flex-wrap">
-            {data.credits.cast.slice(0, 4).map((actor) => (
-              <ActorCard actor={actor} key={actor.profile_path} />
-            ))}
+          {/* MEDIA */}
+          <div className=" mt-10">
+            <h3>Media</h3>
+            <div className="flex overflow-auto p-2">
+              {images?.posters.slice(0, 10).map((item) => (
+                <img
+                  key={item.file_path}
+                  src={getPathForPoster(item.file_path)}
+                  className="rounded-xl mr-2 shadow-xl"
+                />
+              ))}
+            </div>
           </div>
         </div>
         {/* RIGHT SIDE */}
-        <div className="">
-          <h3>Screens</h3>
-          <div className="flex flex-wrap items-center"></div>
+        <div>
+          <h3 className="mb-7">Watch Trailer</h3>
+          <div className="w-full">
+            <iframe
+              width="560"
+              height="315"
+              /* src={`https://www.youtube.com/embed/${
+                data?.videos.results.filter(
+                  (video) => video.name === 'Official Trailer',
+                )[0].key
+              }`} */
+              src={`https://www.youtube.com/embed/${
+                data.videos.results.length > 0
+                  ? data.videos.results[data.videos.results.length - 1].key
+                  : '00'
+              }`}
+              className="w-full h-[500px] rounded-xl"
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>

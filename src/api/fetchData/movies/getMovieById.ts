@@ -6,7 +6,7 @@ export const getMovieById = (
   id: string,
 ): Promise<AxiosResponse<IMovieDetailsProps>> => {
   const response = axios.get<IMovieDetailsProps>(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiConfig.API_KEY}&language=en-Us&append_to_response=credits`,
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiConfig.API_KEY}&language=en-Us&append_to_response=credits,videos,similar`,
   );
   return response;
 };
