@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { apiConfig } from '../api/apiConfig';
 import { getMovieById } from '../api/fetchData/movies/getMovieById';
 import { ActorCard } from '../components/ActorCard/ActorCard';
+import { BlockTitle } from '../components/BlockTitle/BlockTitle';
 import { IMovieDetailsProps } from '../interfaces/MovieDetailsProps';
+import { formatDate } from '../utils/formateDate';
+import { formateNumber } from '../utils/formateNumber';
+import { languageCodes } from '../utils/languageCodes';
 
 interface ImagesProps {
   backdrops: [{ file_path: string }];
@@ -38,10 +42,6 @@ const MovieDetailsPage: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   console.log(data);
   console.log(images);
 
@@ -58,6 +58,14 @@ const MovieDetailsPage: React.FC = () => {
       return 'https://curia.europa.eu/jcms/upload/docs/image/png/2022-07/no_image.png';
     } else {
       return `https://www.themoviedb.org/t/p/w220_and_h330_face/${path}`;
+    }
+  };
+
+  const getPathForReviewerPhoto = (path: string) => {
+    if (!path) {
+      return 'https://curia.europa.eu/jcms/upload/docs/image/png/2022-07/no_image.png';
+    } else {
+      return `https://www.themoviedb.org/t/p/w150_and_h150_face/${path}`;
     }
   };
 
@@ -132,45 +140,84 @@ const MovieDetailsPage: React.FC = () => {
         </div>
       </div>
       {/* DETAILS SECTION */}
-      <div className="text-white p-5 md:p-20 grid grid-cols-2 gap-10">
+      <div className="text-white p-5 md:p-20 grid grid-cols-1 lg:grid-cols-2 lg:gap-10">
         {/* LEFT SIDE */}
         <div>
           {/* CAST */}
           <div>
-            <div className="flex justify-between items-center mb-5">
-              <h3>Cast</h3>
-              <div className="flex text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer">
-                <span className="text-xl">See all</span>
-                <span className="text-2xl">&#x2192;</span>
-              </div>
-            </div>
+            <BlockTitle title="Cast" />
             <div className="flex overflow-auto">
               {data.credits.cast.slice(0, 15).map((actor) => (
                 <ActorCard actor={actor} key={actor.profile_path} />
               ))}
             </div>
+            <div className="flex text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer mt-2">
+              <span className="text-xl">Full Cast & Crew</span>
+            </div>
           </div>
-          {/* MEDIA */}
-          <div className=" mt-10">
-            <h3>Media</h3>
-            <div className="flex overflow-auto p-2">
-              {images?.posters.slice(0, 10).map((item) => (
+          {/* META DATA */}
+          <div className="bg-[#121212] shadow-lg p-5 pt-10 pb-10 rounded-xl mt-10">
+            <ul className="flex justify-between items-center flex-wrap">
+              <li className="flex flex-col">
+                <span className="text-xl">Status:</span>
+                <span className="text-white/50">{data.status}</span>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-xl">Original Language:</span>
+                <span className="text-white/50">
+                  {languageCodes[data.original_language]}
+                </span>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-xl">Budget:</span>
+                <span className="text-white/50">
+                  {formateNumber(data.budget)}
+                </span>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-xl">Revenue:</span>
+                <span className="text-white/50">
+                  {formateNumber(data.revenue)}
+                </span>
+              </li>
+            </ul>
+          </div>
+          {/* REVIEWS */}
+          <div className="mt-10 mb-10">
+            <BlockTitle title="Reviews" />
+            {/* REVIEW BLOCK */}
+            <div className="bg-[#121212] shadow-lg p-5 pt-10 pb-10 rounded-xl mt-10">
+              <div>
                 <img
-                  key={item.file_path}
-                  src={getPathForPoster(item.file_path)}
-                  className="rounded-xl mr-2 shadow-xl"
+                  src={getPathForReviewerPhoto(
+                    data.reviews.results[0].author_details.avatar_path,
+                  )}
+                  alt={`Avatar of ${data.reviews.results[0].author_details.username}`}
+                  className="rounded-full w-20 h-20 float-left mr-5"
                 />
-              ))}
+              </div>
+              {/* REVIEW HEADER */}
+              <div className="flex flex-col">
+                <span className="text-3xl">
+                  A review by {data.reviews.results[0].author_details.username}
+                </span>
+                <span className="mb-5">
+                  Written by {data.reviews.results[0].author_details.username}{' '}
+                  on {formatDate(data.reviews.results[0].created_at)}
+                </span>
+                {/* REVIEW CONTENT */}
+                <p className="text-white/50">
+                  {data.reviews.results[0].content.slice(0, 500) + ' ...'}
+                </p>
+              </div>
             </div>
           </div>
         </div>
         {/* RIGHT SIDE */}
         <div>
-          <h3 className="mb-7">Watch Trailer</h3>
+          <BlockTitle title="Trailer" />
           <div className="w-full">
             <iframe
-              width="560"
-              height="315"
               /* src={`https://www.youtube.com/embed/${
                 data?.videos.results.filter(
                   (video) => video.name === 'Official Trailer',
@@ -181,8 +228,21 @@ const MovieDetailsPage: React.FC = () => {
                   ? data.videos.results[data.videos.results.length - 1].key
                   : '00'
               }`}
-              className="w-full h-[500px] rounded-xl"
+              className="w-full h-[400px] md:h-[500px] rounded-xl"
             ></iframe>
+          </div>
+          {/* MEDIA */}
+          <div className=" mt-10">
+            <BlockTitle title="Media" />
+            <div className="flex overflow-auto p-2">
+              {images?.posters.slice(0, 10).map((item) => (
+                <img
+                  key={item.file_path}
+                  src={getPathForPoster(item.file_path)}
+                  className="rounded-xl mr-2 shadow-xl"
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
