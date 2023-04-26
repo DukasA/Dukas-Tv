@@ -3,16 +3,33 @@ export interface IMovieDetailsProps {
   title: string;
   poster_path: string;
   backdrop_path: string;
+  overview: string;
+  vote_average: number;
+  runtime: number;
+  release_date: string;
+  status: string;
+  revenue: number;
+  budget: number;
+  original_language: string;
+  reviews: {
+    results: [
+      {
+        author: string;
+        content: string;
+        created_at: string;
+        author_details: {
+          username: string;
+          avatar_path: string;
+        }
+      }
+    ]
+  }
   genres: [
     genre: {
       id: number;
       name: string;
     },
   ];
-  overview: string;
-  vote_average: number;
-  runtime: number;
-  release_date: string;
   images?: {
     backdrops: [];
     logos: [];
