@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IMovieDetailsProps } from '../../../interfaces/MovieDetailsProps';
+import { IMovieDetailsProps } from '../../../interfaces/MovieDetailsProps/MovieDetailsProps';
 import { apiConfig } from '../../apiConfig';
 
 export const getMovieById = (
