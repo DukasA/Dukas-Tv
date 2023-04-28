@@ -17,7 +17,7 @@ export const MovieListCard: React.FC<IMovieCardProps> = ({ movie }) => {
         <div className="rounded-lg overflow-hidden">
           <img
             src={getPathForImage(movie.backdrop_path)}
-            alt={movie.title || movie.title}
+            alt={movie.title || movie.name}
             className="w-full h-60 md:h-80 object-cover"
           />
           <div className="p-2">
@@ -30,6 +30,10 @@ export const MovieListCard: React.FC<IMovieCardProps> = ({ movie }) => {
               {movie.title && movie.title.length > 30
                 ? movie.title.slice(0, 30) + '...'
                 : movie.title}
+              {/* ЕСЛИ СЕРИАЛ, ТО ПРИХОДИТ ВМЕСТО TITLE - NAME */}
+              {movie.name && movie.name.length > 30
+                ? movie.name.slice(0, 30) + '...'
+                : movie.name}
             </p>
             <p className="text-white text-[12px] opacity-[0.6]">
               {movie.release_date?.slice(0, 4) /* || movie.first_air_date */}

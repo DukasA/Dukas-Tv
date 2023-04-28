@@ -11,7 +11,7 @@ export const MovieCastList: React.FC<IMovieCreditsProps> = ({ cast }) => {
       </div>
       <div className="flex overflow-auto">
         {cast.slice(0, 15).map((actor) => (
-          <ActorCard actor={actor} key={actor.profile_path} />
+          <ActorCard actor={actor} key={actor.name} />
         ))}
       </div>
       <div className="flex text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer mt-2">

@@ -4,5 +4,6 @@ export interface IMovieCardProps {
     title: string;
     release_date: string;
     backdrop_path: string;
+    name: string;
   };
 }

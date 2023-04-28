@@ -13,8 +13,8 @@ export const MovieReviews: React.FC<IMovieReviewsProps> = ({ results }) => {
   };
   return (
     <div>
-      {results.length > 0 && (
-        <div className="mt-10 mb-10">
+      {results.length > 0 ? (
+        <div className="mt-10 mb-10 overflow-hidden">
           <BlockTitle title="Reviews" />
           {/* REVIEW BLOCK */}
           <div className="bg-[#121212] shadow-lg p-5 pt-10 pb-10 rounded-xl mt-10">
@@ -47,6 +47,15 @@ export const MovieReviews: React.FC<IMovieReviewsProps> = ({ results }) => {
                 {results[0].content.slice(0, 350) + ' ...'}
               </p>
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-10 mb-10 overflow-hidden">
+          <BlockTitle title="Reviews" />
+          <div className="bg-[#121212] shadow-lg p-5 pt-10 pb-10 rounded-xl mt-10">
+            <span className="text-slate-400">
+              No reviews yet for this movie ...
+            </span>
           </div>
         </div>
       )}
