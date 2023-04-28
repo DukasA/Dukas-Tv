@@ -2,23 +2,9 @@ import React from 'react';
 import { useLocation } from 'react-router';
 import { IGenresListProps } from '../../interfaces/GenresListProps';
 import Title from '../Title/Title';
+import { genresData } from '../../utils/genresData';
 
-const GenresList: React.FC<IGenresListProps> = ({ onClick }) => {
-  const genres = [
-    {
-      id: 28,
-      title: 'Action',
-    },
-    {
-      id: 18,
-      title: 'Dramma',
-    },
-    {
-      id: 35,
-      title: 'Komedy',
-    },
-  ];
-
+const GenresList: React.FC<IGenresListProps> = ({ onClick, value }) => {
   const location = useLocation();
 
   const handleChangeGanre = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -41,14 +27,14 @@ const GenresList: React.FC<IGenresListProps> = ({ onClick }) => {
         <select
           className="bg-[#121212] border-slate-800 p-2 pl-6 pr-6 rounded-xl text-2xl outline-none text-white font-semibold"
           onChange={handleChangeGanre}
-          defaultValue="Genre"
+          value={value}
         >
           <option value="Genre" disabled hidden>
-            Genre
+            {value}
           </option>
-          {genres.map((genre) => (
+          {genresData.map((genre) => (
             <option value={genre.id} key={genre.id}>
-              {genre.title}
+              {genre.name}
             </option>
           ))}
         </select>

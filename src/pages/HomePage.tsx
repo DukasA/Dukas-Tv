@@ -1,34 +1,69 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { apiConfig } from '../api/apiConfig';
-import { fetchCartoonsByGenre } from '../api/fetchData/cartoons/fetchTrendingCartoons';
+import { getMovieByName } from '../api/fetchData/movies/getMovieByName';
+import { getTrendingMovies } from '../api/fetchData/movies/getTrendingMovies';
+import { getTrendingMoviesByGenre } from '../api/fetchData/movies/getTrendingMoviesByGenre';
 import GenresList from '../components/GenresList/GenresList';
 import HomeBanner from '../components/HomeBanner/HomeBanner';
 import MoviesContainer from '../components/MoviesContainer/MoviesContainer';
+import { IMovieCardProps } from '../interfaces/MovieCardProps';
 import { load } from '../store/reducers/moviesReducer';
+import { setGenre } from '../store/reducers/genreReducer';
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();
+  const [value, setValue] = useState<string>('');
+
+  /* РАЗОБРАТЬСЯ С ТИПИЗАЦИЕЙ НА СТОРОНЕ REDUX И ЗДЕСЬ */
+  const genre = useSelector((state: any) => state.genre.genre);
+
+  interface IMovies {
+    movies: IMovieCardProps[];
+  }
+
+  const data: IMovieCardProps[] = useSelector(
+    (state: { movies: IMovies }) => state.movies.movies,
+  );
 
   useEffect(() => {
-    const getMovies = async () => {
+    if (data.length === 0) {
       try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/trending/all/week?api_key=${apiConfig.API_KEY}&language=en-US&page=1`,
-        );
-        dispatch(load(response.data.results));
+        getTrendingMovies().then((response) => {
+          dispatch(load(response.data.results));
+        });
       } catch (error) {
         console.log('Error:' + error);
       }
-    };
-
-    getMovies();
+    }
   }, []);
 
   const handleGenreChange = async (genre: string) => {
-    const response = await fetchCartoonsByGenre(genre);
-    dispatch(load(response.data.results));
+    try {
+      const response = await getTrendingMoviesByGenre(genre);
+      dispatch(load(response.data.results));
+      dispatch(setGenre(genre));
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const handleInputMovieName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (value !== '') {
+        getMovieByName(value).then((response) => {
+          dispatch(load(response.data.results));
+          dispatch(setGenre('Genre'));
+        });
+        setValue('');
+      } else {
+        setValue('Type something!');
+      }
+    }
   };
 
   return (
@@ -36,7 +71,31 @@ export const HomePage: React.FC = () => {
       <HomeBanner />
       {/* MAIN */}
       <div className="w-full h-full p-4 pr-2 lg:pl-[10%] lg:pr-[10%] md:pl-[5%] md:pr-[5%] sm:pr-[5%] sm:pl-[5%]">
-        <GenresList onClick={handleGenreChange} />
+        <div className="flex justify-between items-center flex-wrap">
+          <GenresList onClick={handleGenreChange} value={genre} />
+          <div className="flex items-center mb-5 md:mb-0 ">
+            <span
+              /* СДЕЛАТЬ ПОИСК ПО НАЖАТИЮ/ПРИДУМАТЬ ФУНКЦИЮ КАК СДЕЛАТЬ БЕЗ ПОВТОРА КОДА */
+              className="dark:bg-gray-700 text-gray-400 text-sm rounded-l-lg pl-2 pr-2  pt-3 pb-3 outline-none cursor-pointer"
+            >
+              <img
+                src="../../icons/SearchIcon.svg"
+                alt="Search Icon"
+                className="w-6 h-6"
+              />
+            </span>
+            <input
+              type="text"
+              id="first_name"
+              className="text-md rounded-r-lg p-2 pt-3 pb-3 bg-gray-700 placeholder-gray-400 text-white outline-none cursor-pointer"
+              required
+              placeholder="Search movies"
+              value={value}
+              onChange={handleInputMovieName}
+              onKeyPress={handleKeyPress}
+            />
+          </div>
+        </div>
         <MoviesContainer />
       </div>
     </div>

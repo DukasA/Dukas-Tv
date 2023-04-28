@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IMovieCardProps } from '../../interfaces/MovieCardProps';
+import { genresData } from '../../utils/genresData';
 
 const getPathForImage = (path: string) => {
   if (!path) {
@@ -15,25 +16,45 @@ export const MovieListCard: React.FC<IMovieCardProps> = ({ movie }) => {
     <Link to={`/movie/` + movie.id}>
       <div className="w-[160px] sm:mr-2 md:w-auto" key={movie.id}>
         <div className="rounded-lg overflow-hidden">
-          <img
-            src={getPathForImage(movie.backdrop_path)}
-            alt={movie.title || movie.title}
-            className="w-full h-60 md:h-80 object-cover"
-          />
-          <div className="p-2">
-            {/* <p className="text-white opacity-[0.8] font-semibold text-[20px]">
-            {movie.name && movie.name.length > 30
-              ? movie.name.slice(0, 30) + '...'
-              : movie.name}
-          </p> */}
+          <div className="w-full h-60 md:h-80 relative">
+            <img
+              src={getPathForImage(movie.poster_path)}
+              alt={movie.title || movie.name}
+              className="w-full h-full object-cover"
+            />
+            {/* CARD BUTTONS */}
+            {/* <div className="rounded-l-xl w-8 h-8 absolute top-0 right-[-2px]">
+              <img className="" src="../../../icons/bookmark.svg" />
+            </div> */}
+          </div>
+          <div className="p-2 flex flex-col">
             <p className="text-white opacity-[0.8] font-semibold text-[20px]">
               {movie.title && movie.title.length > 30
                 ? movie.title.slice(0, 30) + '...'
                 : movie.title}
+              {/* ЕСЛИ СЕРИАЛ, ТО ПРИХОДИТ ВМЕСТО TITLE - NAME */}
+              {movie.name && movie.name.length > 30
+                ? movie.name.slice(0, 30) + '...'
+                : movie.name}
             </p>
-            <p className="text-white text-[12px] opacity-[0.6]">
-              {movie.release_date?.slice(0, 4) /* || movie.first_air_date */}
-            </p>
+            <div className="flex flex-col">
+              <span className="text-white text-[12px] md:text-[14px] opacity-[0.6]">
+                {movie.release_date?.slice(0, 4) ||
+                  movie.first_air_date.slice(0, 4)}{' '}
+              </span>
+              <div className="flex flex-wrap">
+                {movie.genre_ids.map((id) => (
+                  <span
+                    className="text-white text-[12px] md:text-[14px] opacity-[0.6]"
+                    key={id}
+                  >
+                    {id === movie.genre_ids[movie.genre_ids.length - 1]
+                      ? genresData.find((genre) => genre.id === id)?.name
+                      : genresData.find((genre) => genre.id === id)?.name + ','}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
