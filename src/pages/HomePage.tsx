@@ -10,13 +10,15 @@ import MoviesContainer from '../components/MoviesContainer/MoviesContainer';
 import { IMovieCardProps } from '../interfaces/MovieCardProps';
 import { load } from '../store/reducers/moviesReducer';
 import { setGenre } from '../store/reducers/genreReducer';
+import { RootState } from '../store/store';
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
 
   /* РАЗОБРАТЬСЯ С ТИПИЗАЦИЕЙ НА СТОРОНЕ REDUX И ЗДЕСЬ */
-  const genre = useSelector((state: any) => state.genre.genre);
+  const genreSelector = (state: RootState): string => state.genre.genre;
+  const genre: string = useSelector<RootState, string>(genreSelector);
 
   interface IMovies {
     movies: IMovieCardProps[];

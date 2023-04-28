@@ -1,6 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import moviesReducer from './reducers/moviesReducer';
-import genreReducer from './reducers/genreReducer';
+import genreReducer, { IGenreState } from './reducers/genreReducer';
+
+export interface RootState {
+  genre: IGenreState;
+}
 
 const rootReducer = combineReducers({
   movies: moviesReducer,
