@@ -22,8 +22,6 @@ const MoviesContainer: React.FC = () => {
     (state: { movies: IMovies }) => state.movies.movies,
   );
 
-  console.log(data);
-
   if (data.length === 0) {
     return <h1 className="text-3xl text-white">Nothing not found</h1>;
   }

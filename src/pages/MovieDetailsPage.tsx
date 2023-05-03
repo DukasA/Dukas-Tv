@@ -10,6 +10,7 @@ import MoviePlayer from '../components/MovieDetailsComponents/MoviePlayer';
 import { MovieReviews } from '../components/MovieDetailsComponents/MovieReviews';
 import { IMovieDetailsProps } from '../interfaces/MovieDetailsProps/MovieDetailsProps';
 import MovieCastList from '../components/MovieDetailsComponents/MovieCastList';
+// import { MovieSimilar } from '../components/MovieDetailsComponents/MovieRecomendations';
 
 interface ImagesProps {
   backdrops: [{ file_path: string }];
@@ -137,6 +138,8 @@ const MovieDetailsPage: React.FC = () => {
             posters={images.posters}
             backdrops={images.backdrops}
           />
+          {/* <MovieSimilar results={data.similar.results} /> */}{' '}
+          {/* ЧТО-ТО С ПРОПСАМИ! ГЛЯНУТЬ ПОЗЖЕ */}
         </div>
         {/* RIGHT SIDE */}
         <div>

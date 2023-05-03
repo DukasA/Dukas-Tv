@@ -48,6 +48,9 @@ export const MovieReviews: React.FC<IMovieReviewsProps> = ({ results }) => {
               </p>
             </div>
           </div>
+          <div className="flex text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer mt-2">
+            <span className="text-xl">View All Reviews</span>
+          </div>
         </div>
       ) : (
         <div className="mt-10 mb-10 overflow-hidden">

@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getMovieByName } from '../api/fetchData/movies/getMovieByName';
-import { getTrendingMovies } from '../api/fetchData/movies/getTrendingMovies';
-import { getTrendingMoviesByGenre } from '../api/fetchData/movies/getTrendingMoviesByGenre';
+import { getAllTrendingMovies } from '../api/fetchData/homePage/getAllTrendingMovies';
+import { getTrendingMoviesByGenre } from '../api/fetchData/homePage/getTrendingMoviesByGenre';
 import GenresList from '../components/GenresList/GenresList';
 import HomeBanner from '../components/HomeBanner/HomeBanner';
 import MoviesContainer from '../components/MoviesContainer/MoviesContainer';
 import { IMovieCardProps } from '../interfaces/MovieCardProps';
-import { load } from '../store/reducers/moviesReducer';
+import { loadHomeMovies } from '../store/reducers/moviesReducer';
 import { setGenre } from '../store/reducers/genreReducer';
 import { RootState } from '../store/store';
+
+interface IMovies {
+  movies: IMovieCardProps[];
+}
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,10 +24,6 @@ export const HomePage: React.FC = () => {
   const genreSelector = (state: RootState): string => state.genre.genre;
   const genre: string = useSelector<RootState, string>(genreSelector);
 
-  interface IMovies {
-    movies: IMovieCardProps[];
-  }
-
   const data: IMovieCardProps[] = useSelector(
     (state: { movies: IMovies }) => state.movies.movies,
   );
@@ -31,8 +31,9 @@ export const HomePage: React.FC = () => {
   useEffect(() => {
     if (data.length === 0) {
       try {
-        getTrendingMovies().then((response) => {
-          dispatch(load(response.data.results));
+        getAllTrendingMovies().then((response) => {
+          dispatch(loadHomeMovies(response.data.results));
+          dispatch(setGenre('Genre'));
         });
       } catch (error) {
         console.log('Error:' + error);
@@ -43,7 +44,7 @@ export const HomePage: React.FC = () => {
   const handleGenreChange = async (genre: string) => {
     try {
       const response = await getTrendingMoviesByGenre(genre);
-      dispatch(load(response.data.results));
+      dispatch(loadHomeMovies(response.data.results));
       dispatch(setGenre(genre));
     } catch (error) {
       alert(error);
@@ -58,7 +59,7 @@ export const HomePage: React.FC = () => {
     if (e.key === 'Enter') {
       if (value !== '') {
         getMovieByName(value).then((response) => {
-          dispatch(load(response.data.results));
+          dispatch(loadHomeMovies(response.data.results));
           dispatch(setGenre('Genre'));
         });
         setValue('');
@@ -68,6 +69,7 @@ export const HomePage: React.FC = () => {
     }
   };
 
+  console.log(data);
   return (
     <div className="bg-[#1c1c1e]">
       <HomeBanner />

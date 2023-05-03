@@ -34,13 +34,13 @@ export const MovieListCard: React.FC<IMovieCardProps> = ({ movie }) => {
                 : movie.title}
               {/* ЕСЛИ СЕРИАЛ, ТО ПРИХОДИТ ВМЕСТО TITLE - NAME */}
               {movie.name && movie.name.length > 30
-                ? movie.name.slice(0, 30) + '...'
+                ? movie.name?.slice(0, 30) + '...'
                 : movie.name}
             </p>
             <div className="flex flex-col">
               <span className="text-white text-[12px] md:text-[14px] opacity-[0.6]">
                 {movie.release_date?.slice(0, 4) ||
-                  movie.first_air_date.slice(0, 4)}{' '}
+                  movie.first_air_date?.slice(0, 4)}{' '}
               </span>
               <div className="flex flex-wrap">
                 {movie.genre_ids.map((id) => (

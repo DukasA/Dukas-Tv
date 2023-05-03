@@ -2,6 +2,7 @@ import { IMovieCreditsProps } from './MovieCreditsProps';
 import { IMovieGenresProps } from './MovieGenresProps';
 import { IMovieImagesPorps } from './MovieImagesProps';
 import { IMovieReviewsProps } from './MovieReviewsProps';
+import { IMovieSimilarProps } from './MovieSimilarProps';
 import { IMovieVideosPorps } from './MovieVideosPorps';
 
 export interface IMovieDetailsProps {
@@ -22,4 +23,5 @@ export interface IMovieDetailsProps {
   images?: IMovieImagesPorps;
   videos: IMovieVideosPorps;
   credits: IMovieCreditsProps;
+  similar: IMovieSimilarProps;
 }
