@@ -8,5 +8,6 @@ export interface IMovieCardProps {
     genre_ids: number[];
     vote_average: number;
     first_air_date?: string;
+    backdrop_path: string;
   };
 }

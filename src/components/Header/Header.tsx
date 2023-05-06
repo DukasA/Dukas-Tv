@@ -46,7 +46,7 @@ export const Header: React.FC = () => {
           </ul>
           <ul className="flex justify-between items-center">
             <NavLink title="Subscribe" type="subscribe" link={'/subscribe'} />
-            <NavLink title="LOG IN" type="login" link={'/login'} />
+            <NavLink title="Log In" type="login" link={'/login'} />
           </ul>
         </nav>
       </div>

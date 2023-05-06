@@ -10,6 +10,7 @@ export const MoviePlayer: React.FC<IMovieVideosPorps> = ({ results }) => {
       </div>
       <div className="w-full">
         <iframe
+          allowFullScreen
           src={`https://www.youtube.com/embed/${
             results.length > 0 ? results[results.length - 1].key : '00'
           }`}

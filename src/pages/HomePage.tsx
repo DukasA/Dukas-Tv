@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getMovieByName } from '../api/fetchData/movies/getMovieByName';
@@ -11,35 +11,42 @@ import { IMovieCardProps } from '../interfaces/MovieCardProps';
 import { loadHomeMovies } from '../store/reducers/moviesReducer';
 import { setGenre } from '../store/reducers/genreReducer';
 import { RootState } from '../store/store';
+import { Pagination } from '../components/Pagination/Pagination';
 
 interface IMovies {
   movies: IMovieCardProps[];
+  homePageMovies: IMovieCardProps[];
 }
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number | null>(null);
+  const scrollElement = useRef<HTMLDivElement>(null);
 
   /* РАЗОБРАТЬСЯ С ТИПИЗАЦИЕЙ НА СТОРОНЕ REDUX И ЗДЕСЬ */
   const genreSelector = (state: RootState): string => state.genre.genre;
   const genre: string = useSelector<RootState, string>(genreSelector);
 
   const data: IMovieCardProps[] = useSelector(
-    (state: { movies: IMovies }) => state.movies.movies,
+    (state: { movies: IMovies }) => state.movies.homePageMovies,
   );
 
   useEffect(() => {
-    if (data.length === 0) {
-      try {
-        getAllTrendingMovies().then((response) => {
-          dispatch(loadHomeMovies(response.data.results));
-          dispatch(setGenre('Genre'));
-        });
-      } catch (error) {
-        console.log('Error:' + error);
-      }
+    /* if (data.length === 0) { */
+    try {
+      getAllTrendingMovies(page).then((response) => {
+        dispatch(loadHomeMovies(response.data.results));
+        console.log(response.data);
+        setTotalPages(response.data.total_pages);
+        dispatch(setGenre('Genre'));
+      });
+    } catch (error) {
+      console.log('Error:' + error);
     }
-  }, []);
+    /* } */
+  }, [page]);
 
   const handleGenreChange = async (genre: string) => {
     try {
@@ -75,7 +82,10 @@ export const HomePage: React.FC = () => {
       <HomeBanner />
       {/* MAIN */}
       <div className="w-full h-full p-4 pr-2 lg:pl-[10%] lg:pr-[10%] md:pl-[5%] md:pr-[5%] sm:pr-[5%] sm:pl-[5%]">
-        <div className="flex justify-between items-center flex-wrap">
+        <div
+          ref={scrollElement}
+          className="flex justify-between items-center flex-wrap"
+        >
           <GenresList onClick={handleGenreChange} value={genre} />
           <div className="flex items-center mb-5 md:mb-0 ">
             <span
@@ -102,6 +112,12 @@ export const HomePage: React.FC = () => {
         </div>
         <MoviesContainer />
       </div>
+      <Pagination
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+        scrollElement={scrollElement}
+      />
     </div>
   );
 };

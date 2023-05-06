@@ -22,7 +22,16 @@ export const moviesSlice = createSlice({
   initialState,
   reducers: {
     loadHomeMovies: (state, action: PayloadAction<IMovieCardProps[]>) => {
+      state.homePageMovies = action.payload;
+    },
+    loadMovies: (state, action: PayloadAction<IMovieCardProps[]>) => {
       state.movies = action.payload;
+    },
+    loadSeries: (state, action: PayloadAction<IMovieCardProps[]>) => {
+      state.series = action.payload;
+    },
+    loadCartoons: (state, action: PayloadAction<IMovieCardProps[]>) => {
+      state.cartoons = action.payload;
     },
     setPageName: (state, action: PayloadAction<string>) => {
       state.pageName = action.payload;
