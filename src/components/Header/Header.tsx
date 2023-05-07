@@ -45,8 +45,8 @@ export const Header: React.FC = () => {
             <NavLink title="Cartoons" type="noDropDown" link={'/cartoons'} />
           </ul>
           <ul className="flex justify-between items-center">
-            <NavLink title="Subscribe" type="subscribe" link={'/subscribe'} />
-            <NavLink title="Log In" type="login" link={'/login'} />
+            <NavLink title="Sign In" type="subscribe" link={'/sign_up'} />
+            <NavLink title="Log In" type="login" link={'/log_in'} />
           </ul>
         </nav>
       </div>
@@ -68,19 +68,19 @@ export const Header: React.FC = () => {
               <NavLink
                 title="Movies"
                 type="noDropDown"
-                link={'/Movies'}
+                link={'/movies'}
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
               <NavLink
                 title="Series"
                 type="noDropDown"
-                link={'/Series'}
+                link={'/series'}
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
               <NavLink
                 title="Cartoons"
                 type="noDropDown"
-                link={'/Cartoons'}
+                link={'/cartoons'}
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
             </ul>
@@ -88,13 +88,13 @@ export const Header: React.FC = () => {
               <NavLink
                 title="Subscribe"
                 type="subscribe"
-                link={'/Subscribe'}
+                link={'/subscribe'}
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
               <NavLink
                 title="LOG IN"
                 type="noDropDown"
-                link={'/Login'}
+                link={'/auth'}
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
             </ul>
