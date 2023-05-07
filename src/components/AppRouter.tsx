@@ -3,9 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from '../utils/routes';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/index';
+import type { User } from 'firebase/auth';
 
 export const AppRouter: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
