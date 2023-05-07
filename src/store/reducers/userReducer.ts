@@ -2,4 +2,4 @@ export const initialState = {
   user: [],
 };
 
-export const a = 0;
+export const a = null;
