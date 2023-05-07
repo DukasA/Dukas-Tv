@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { publicRoutes } from '../utils/routes';
+import { privateRoutes, publicRoutes } from '../utils/routes';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/index';
 
 export const AppRouter: React.FC = () => {
+  const [user, setUser] = useState<any>(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <Routes>
+      {user &&
+        privateRoutes.map(({ path, Component }) => (
+          <Route key={path} path={path} element={<Component />} />
+        ))}
       {publicRoutes.map(({ path, Component }) => (
         <Route key={path} path={path} element={<Component />} />
       ))}

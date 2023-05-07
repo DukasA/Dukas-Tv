@@ -5,3 +5,6 @@ export const SERIES_ROUTE = '/series';
 export const CARTOONS_ROUTE = '/cartoons';
 export const ANIME_ROUTES = '/anime';
 export const MOVIE_DETAILS_ROUTE = '/movie/:id';
+export const SIGN_UP_ROUTE = '/sign_up';
+export const LOG_IN_ROUTE = '/log_in';
+export const USER_PROFILE_ROUTE = '/user';

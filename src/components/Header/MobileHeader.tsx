@@ -10,14 +10,13 @@ export const MobileHeader: React.FC = () => {
       <div className="flex flex-col">
         <nav className="ml-20 flex flex-col">
           <ul className="flex justify-between items-center flex-col">
-            <NavLink title="Movies" link={'/Movies'} />
-            <NavLink title="Series" link={'/Series'} />
-            <NavLink title="Cartoons" link={'/Cartoons'} />
-            <NavLink title="Anime" link={'/Anime'} />
+            <NavLink title="Movies" link={'/movies'} />
+            <NavLink title="Series" link={'/series'} />
+            <NavLink title="Cartoons" link={'/cartoons'} />
           </ul>
           <ul className="flex justify-between items-center flex-col">
-            <NavLink title="Subscribe" type="subscribe" link={'/Subscribe'} />
-            <NavLink title="LOG IN" type="login" link={'/Login'} />
+            <NavLink title="Subscribe" type="subscribe" link={'/subscribe'} />
+            <NavLink title="LOG IN" type="login" link={'/auth'} />
           </ul>
         </nav>
       </div>
