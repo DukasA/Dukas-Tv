@@ -1225,6 +1225,7 @@
   "resolved" "https://registry.npmjs.org/@eslint/js/-/js-8.37.0.tgz"
   "version" "8.37.0"
 
+<<<<<<< HEAD
 "@firebase/analytics-compat@0.2.6":
   "integrity" "sha512-4MqpVLFkGK7NJf/5wPEEP7ePBJatwYpyjgJ+wQHQGHfzaCDgntOnl9rL2vbVGGKCnRqWtZDIWhctB86UWXaX2Q=="
   "resolved" "https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.2.6.tgz"
@@ -1296,10 +1297,14 @@
     "tslib" "^2.1.0"
 
 "@firebase/app-types@^0.9.0", "@firebase/app-types@0.9.0", "@firebase/app-types@0.x":
+=======
+"@firebase/app-types@^0.9.0":
+>>>>>>> main
   "integrity" "sha512-AeweANOIo0Mb8GiYm3xhTEBVCmPwTYAu9Hcd2qSkLuga/6+j9b1Jskl5bpiSQWy9eJ/j5pavxj6eYogmnuzm+Q=="
   "resolved" "https://registry.npmjs.org/@firebase/app-types/-/app-types-0.9.0.tgz"
   "version" "0.9.0"
 
+<<<<<<< HEAD
 "@firebase/app@0.9.9", "@firebase/app@0.x":
   "integrity" "sha512-8jzuHtQ/t9XqK+0IAQ/lpylVYzXGKIUKm6U3v7LWor+MGIm+9Ucn+hbrd2iBjH8qfmNrjnQnmf7sWBbdSa54oA=="
   "resolved" "https://registry.npmjs.org/@firebase/app/-/app-0.9.9.tgz"
@@ -1627,6 +1632,8 @@
     "protobufjs" "^7.0.0"
     "yargs" "^17.7.2"
 
+=======
+>>>>>>> main
 "@humanwhocodes/config-array@^0.11.8":
   "integrity" "sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g=="
   "resolved" "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
