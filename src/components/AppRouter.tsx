@@ -9,7 +9,20 @@ export const AppRouter: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+      if (user) {
+        setUser(user);
+        /* const refreshTokenInterval = setInterval(() => {
+          user.getIdToken(true);
+          console.log('refresh');
+        }, 20000);
+        return () => clearInterval(refreshTokenInterval); */
+        /* const signOutTimer = setTimeout(() => {
+          auth.signOut();
+          console.log('signout');
+        }, 2000); */
+
+        /* return () => clearTimeout(signOutTimer); */
+      }
     });
     return unsubscribe;
   }, []);

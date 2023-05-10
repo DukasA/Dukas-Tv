@@ -8,6 +8,7 @@ export const MovieMediaList: React.FC<IMovieImagesPorps> = ({
 }) => {
   const [backdropsIsVisible, setBackdropsIsVisible] = useState<boolean>(true);
   const [postersIsVisible, setPostersIsVisible] = useState<boolean>(false);
+
   const getPathForPoster = (path: string) => {
     if (!path) {
       return 'https://curia.europa.eu/jcms/upload/docs/image/png/2022-07/no_image.png';

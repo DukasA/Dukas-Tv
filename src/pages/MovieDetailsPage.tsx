@@ -10,6 +10,18 @@ import MoviePlayer from '../components/MovieDetailsComponents/MoviePlayer';
 import { MovieReviews } from '../components/MovieDetailsComponents/MovieReviews';
 import { IMovieDetailsProps } from '../interfaces/MovieDetailsProps/MovieDetailsProps';
 import MovieCastList from '../components/MovieDetailsComponents/MovieCastList';
+import { db } from '../firebase/index';
+import { auth } from '../firebase/index';
+import {
+  collection,
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 // import { MovieSimilar } from '../components/MovieDetailsComponents/MovieRecomendations';
 
 interface ImagesProps {
@@ -23,6 +35,8 @@ const MovieDetailsPage: React.FC = () => {
   const movieId = params.id;
   const [data, setData] = useState<IMovieDetailsProps | null>(null);
   const [images, setImages] = useState<ImagesProps | null>(null);
+  const navigation = useNavigate();
+  const user = auth.currentUser;
 
   useEffect(() => {
     if (movieId) {
@@ -58,7 +72,77 @@ const MovieDetailsPage: React.FC = () => {
     }
   };
 
-  const navigation = useNavigate();
+  const addToFavoriteMovies = async () => {
+    const usersRef = collection(db, 'users');
+    const userDocRef = doc(usersRef, user?.uid);
+    const movie = data?.id;
+    try {
+      const userDoc = await getDoc(userDocRef);
+      const movieRef = collection(userDocRef, 'favoriteMovies');
+
+      if (userDoc.exists()) {
+        const querySnapshot = await getDocs(
+          query(movieRef, where('movie', '==', movie)),
+        );
+        if (querySnapshot.empty) {
+          await addDoc(movieRef, {
+            movie,
+          });
+          console.log(
+            'Movie added siccessfully to collection "favoriteMovies"',
+          );
+        } else {
+          console.log('Movie already exists in user collection.');
+        }
+      } else {
+        await setDoc(userDocRef, {});
+        await addDoc(movieRef, {
+          movie,
+        });
+        console.log(
+          'added new user,added new movie to collection "favoriteMovies" successfully',
+        );
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const addToWatchLater = async () => {
+    const usersRef = collection(db, 'users');
+    const userDocRef = doc(usersRef, user?.uid);
+    const movie = data?.id;
+    try {
+      const userDoc = await getDoc(userDocRef);
+      const movieRef = collection(userDocRef, 'watchLater');
+
+      if (userDoc.exists()) {
+        const querySnapshot = await getDocs(
+          query(movieRef, where('movie', '==', movie)),
+        );
+        if (querySnapshot.empty) {
+          await addDoc(movieRef, {
+            movie,
+          });
+          console.log(
+            'Movie added siccessfully to collection "watchLaterMovies"',
+          );
+        } else {
+          console.log('Movie already exists in user collection.');
+        }
+      } else {
+        await setDoc(userDocRef, {});
+        await addDoc(movieRef, {
+          movie,
+        });
+        console.log(
+          'added new user,added new movie to collection "watchLaterMovies" successfully',
+        );
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   if (!data || !images) {
     return (
@@ -124,6 +208,21 @@ const MovieDetailsPage: React.FC = () => {
               <span className="mt-2 text-gray-400 opacity-[0.9]">
                 <span className="text-gray-400">/</span> 10
               </span>
+            </div>
+            {/* USER ACTIONS */}
+            <div className="flex items-center mt-5">
+              <div
+                className="rounded-full overflow-hidden opacity-70 hover:opacity-100 hover:cursor-pointer mr-10"
+                onClick={addToFavoriteMovies}
+              >
+                <img src="../../icons/LikeIcon.svg" className="w-10 h-10" />
+              </div>
+              <div
+                className="rounded-full overflow-hidden opacity-70 hover:opacity-100 hover:cursor-pointer"
+                onClick={addToWatchLater}
+              >
+                <img src="../../icons/bookmark.svg" className="w-10 h-10" />
+              </div>
             </div>
           </div>
         </div>

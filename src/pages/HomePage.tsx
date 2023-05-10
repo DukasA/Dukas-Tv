@@ -7,16 +7,11 @@ import { getTrendingMoviesByGenre } from '../api/fetchData/homePage/getTrendingM
 import GenresList from '../components/GenresList/GenresList';
 import HomeBanner from '../components/HomeBanner/HomeBanner';
 import MoviesContainer from '../components/MoviesContainer/MoviesContainer';
-import { IMovieCardProps } from '../interfaces/MovieCardProps';
 import { loadHomeMovies } from '../store/reducers/moviesReducer';
 import { setGenre } from '../store/reducers/genreReducer';
 import { RootState } from '../store/store';
 import { Pagination } from '../components/Pagination/Pagination';
-
-interface IMovies {
-  movies: IMovieCardProps[];
-  homePageMovies: IMovieCardProps[];
-}
+import { Loader } from '../components/Loader/Loader';
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,24 +19,25 @@ export const HomePage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number | null>(null);
   const scrollElement = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   /* РАЗОБРАТЬСЯ С ТИПИЗАЦИЕЙ НА СТОРОНЕ REDUX И ЗДЕСЬ */
   const genreSelector = (state: RootState): string => state.genre.genre;
   const genre: string = useSelector<RootState, string>(genreSelector);
 
-  const data: IMovieCardProps[] = useSelector(
-    (state: { movies: IMovies }) => state.movies.homePageMovies,
-  );
-
   useEffect(() => {
     /* if (data.length === 0) { */
     try {
-      getAllTrendingMovies(page).then((response) => {
-        dispatch(loadHomeMovies(response.data.results));
-        console.log(response.data);
-        setTotalPages(response.data.total_pages);
-        dispatch(setGenre('Genre'));
-      });
+      setIsLoading(true);
+      getAllTrendingMovies(page)
+        .then((response) => {
+          dispatch(loadHomeMovies(response.data.results));
+          setTotalPages(response.data.total_pages);
+          dispatch(setGenre('Genre'));
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     } catch (error) {
       console.log('Error:' + error);
     }
@@ -50,9 +46,11 @@ export const HomePage: React.FC = () => {
 
   const handleGenreChange = async (genre: string) => {
     try {
+      setIsLoading(true);
       const response = await getTrendingMoviesByGenre(genre);
       dispatch(loadHomeMovies(response.data.results));
       dispatch(setGenre(genre));
+      setIsLoading(false);
     } catch (error) {
       alert(error);
     }
@@ -65,18 +63,21 @@ export const HomePage: React.FC = () => {
   const handleKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (value !== '') {
-        getMovieByName(value).then((response) => {
-          dispatch(loadHomeMovies(response.data.results));
-          dispatch(setGenre('Genre'));
-        });
+        setIsLoading(true);
+        getMovieByName(value)
+          .then((response) => {
+            dispatch(loadHomeMovies(response.data.results));
+            dispatch(setGenre('Genre'));
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
         setValue('');
       } else {
         setValue('Type something!');
       }
     }
   };
-
-  console.log(data);
   return (
     <div className="bg-[#1c1c1e]">
       <HomeBanner />
@@ -110,7 +111,13 @@ export const HomePage: React.FC = () => {
             />
           </div>
         </div>
-        <MoviesContainer />
+        {isLoading ? (
+          <div className="flex justify-center items-center">
+            <Loader />
+          </div>
+        ) : (
+          <MoviesContainer />
+        )}
       </div>
       <Pagination
         page={page}

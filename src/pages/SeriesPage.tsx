@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTrendingSeries } from '../api/fetchData/seriesPage/getTrendingSeries';
 import { getTrendingSeriesByGenre } from '../api/fetchData/seriesPage/getTrendingSeriesByGenre';
 import GenresList from '../components/GenresList/GenresList';
+import { Loader } from '../components/Loader/Loader';
 import MoviesContainer from '../components/MoviesContainer/MoviesContainer';
 import { Pagination } from '../components/Pagination/Pagination';
 import { setGenre } from '../store/reducers/genreReducer';
@@ -16,13 +17,19 @@ const SeriesPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number | null>(null);
   const scrollElement = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     try {
-      getTrendingSeries(page).then((response) => {
-        dispatch(loadHomeMovies(response.data.results));
-        setTotalPages(response.data.total_pages);
-      });
+      setIsLoading(true);
+      getTrendingSeries(page)
+        .then((response) => {
+          dispatch(loadHomeMovies(response.data.results));
+          setTotalPages(response.data.total_pages);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
       dispatch(setGenre('Genre'));
       console.log('rerender');
     } catch (error) {
@@ -31,10 +38,16 @@ const SeriesPage: React.FC = () => {
   }, [page]);
 
   const handleGenreChange = async (genre: string) => {
-    const response = await getTrendingSeriesByGenre(genre);
-    dispatch(loadHomeMovies(response.data.results));
-    dispatch(setGenre(genre));
-    console.log(response.data.results);
+    try {
+      setIsLoading(true);
+      const response = await getTrendingSeriesByGenre(genre);
+      dispatch(loadHomeMovies(response.data.results));
+      dispatch(setGenre(genre));
+      console.log(response.data.results);
+      setIsLoading(false);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -43,7 +56,13 @@ const SeriesPage: React.FC = () => {
         <div ref={scrollElement}></div>
         <GenresList onClick={handleGenreChange} value={genre} />
         {/* SCROLL ELEMENT */}
-        <MoviesContainer />
+        {isLoading ? (
+          <div className="flex justify-center items-center">
+            <Loader />
+          </div>
+        ) : (
+          <MoviesContainer />
+        )}
       </div>
       <Pagination
         page={page}

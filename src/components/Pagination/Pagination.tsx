@@ -23,7 +23,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
         onClick={prevPage}
         className={`${
           page === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none ' : ''
-        }inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+        }inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer`}
       >
         <svg
           aria-hidden="true"
@@ -33,9 +33,9 @@ export const Pagination: React.FC<IPaginationProps> = ({
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-            clip-rule="evenodd"
+            clipRule="evenodd"
           ></path>
         </svg>
         Previous
@@ -59,7 +59,7 @@ export const Pagination: React.FC<IPaginationProps> = ({
           page === totalPages
             ? 'opacity-50 cursor-not-allowed pointer-events-none '
             : ''
-        }inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+        }inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer`}
       >
         Next
         <svg
@@ -70,9 +70,9 @@ export const Pagination: React.FC<IPaginationProps> = ({
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-            clip-rule="evenodd"
+            clipRule="evenodd"
           ></path>
         </svg>
       </span>

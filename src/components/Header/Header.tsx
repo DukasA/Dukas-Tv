@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import NavLink from './NavLink';
+import { auth } from '../../firebase/index';
 
 export const Header: React.FC = () => {
   const [isMobileHeaderVisible, setIsMobileHeaderVisible] =
@@ -44,10 +45,16 @@ export const Header: React.FC = () => {
             <NavLink title="Series" type="noDropDown" link={'/series'} />
             <NavLink title="Cartoons" type="noDropDown" link={'/cartoons'} />
           </ul>
-          <ul className="flex justify-between items-center">
-            <NavLink title="Sign In" type="subscribe" link={'/sign_up'} />
-            <NavLink title="Log In" type="login" link={'/log_in'} />
-          </ul>
+          {auth.currentUser ? (
+            <ul className="flex justify-center items-center">
+              <NavLink title="Profile" type="login" link={'/user'} />
+            </ul>
+          ) : (
+            <ul className="flex justify-between items-center">
+              <NavLink title="Sign In" type="subscribe" link={'/sign_up'} />
+              <NavLink title="Log In" type="login" link={'/log_in'} />
+            </ul>
+          )}
         </nav>
       </div>
       {/* MOBILE HEADER */}
@@ -84,20 +91,33 @@ export const Header: React.FC = () => {
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
             </ul>
-            <ul className="flex justify-between items-center flex-col">
+            {auth.currentUser ? (
               <NavLink
-                title="Subscribe"
-                type="subscribe"
-                link={'/subscribe'}
+                title="Profile"
+                type="login"
+                link={'/user'}
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
-              <NavLink
-                title="LOG IN"
-                type="noDropDown"
-                link={'/auth'}
-                onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
-              />
-            </ul>
+            ) : (
+              <ul className="flex flex-col md:flex-row justify-center md:justify-between items-center">
+                <NavLink
+                  title="Sign In"
+                  type="subscribe"
+                  link={'/sign_up'}
+                  onClick={() =>
+                    setIsMobileHeaderVisible(!isMobileHeaderVisible)
+                  }
+                />
+                <NavLink
+                  title="Log In"
+                  type="login"
+                  link={'/log_in'}
+                  onClick={() =>
+                    setIsMobileHeaderVisible(!isMobileHeaderVisible)
+                  }
+                />
+              </ul>
+            )}
           </nav>
         </div>
       </div>

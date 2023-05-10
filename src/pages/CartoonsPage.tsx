@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartoonsByGenre } from '../api/fetchData/cartoonsPage/fetchCartoonsByGenre';
 import { fetchTrendingCartoons } from '../api/fetchData/cartoonsPage/fetchTrendingCartoons';
 import GenresList from '../components/GenresList/GenresList';
+import { Loader } from '../components/Loader/Loader';
 import MoviesContainer from '../components/MoviesContainer/MoviesContainer';
 import { Pagination } from '../components/Pagination/Pagination';
 import { IMovieCardProps } from '../interfaces/MovieCardProps';
@@ -23,16 +24,23 @@ const CartoonsPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number | null>(null);
   const scrollElement = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const pageName = useSelector(
     (state: { movies: IMovies }) => state.movies.pageName,
   );
 
   useEffect(() => {
     try {
-      fetchTrendingCartoons(page).then((response) => {
-        dispatch(loadHomeMovies(response.data.results));
-        setTotalPages(response.data.total_pages);
-      });
+      setIsLoading(true);
+      fetchTrendingCartoons(page)
+        .then((response) => {
+          dispatch(loadHomeMovies(response.data.results));
+          setTotalPages(response.data.total_pages);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
       dispatch(setPageName('cartoonsPage'));
     } catch (error) {
       alert(error);
@@ -41,9 +49,15 @@ const CartoonsPage: React.FC = () => {
   console.log(pageName);
 
   const handleGenreChange = async (genre: string) => {
-    const response = await fetchCartoonsByGenre(genre);
-    dispatch(loadHomeMovies(response.data.results));
-    dispatch(setGenre(genre));
+    try {
+      setIsLoading(true);
+      const response = await fetchCartoonsByGenre(genre);
+      dispatch(loadHomeMovies(response.data.results));
+      dispatch(setGenre(genre));
+      setIsLoading(false);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -51,7 +65,13 @@ const CartoonsPage: React.FC = () => {
       <div className="w-full h-full p-4 pr-2 lg:pl-[10%] lg:pr-[10%] md:pl-[5%] md:pr-[5%] sm:pr-[5%] sm:pl-[5%]">
         <div ref={scrollElement}></div>
         <GenresList onClick={handleGenreChange} value={genre} />
-        <MoviesContainer />
+        {isLoading ? (
+          <div className="flex justify-center items-center">
+            <Loader />
+          </div>
+        ) : (
+          <MoviesContainer />
+        )}
       </div>
       <Pagination
         page={page}
