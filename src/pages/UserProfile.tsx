@@ -9,14 +9,16 @@ import { auth } from '../firebase/index';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { getMovieById } from '../api/fetchData/movies/getMovieById';
 import { Loader } from '../components/Loader/Loader';
-// import { IMovieCardProps } from '../interfaces/MovieCardProps';
+import { IMovieDetailsProps } from '../interfaces/MovieDetailsProps/MovieDetailsProps';
 
 export const UserProfile: React.FC = () => {
   const usersRef = collection(db, 'users');
   const userDocRef = doc(usersRef, auth.currentUser?.uid);
   const movieRef = collection(userDocRef, 'favoriteMovies');
   let movieIds: number[] = [];
-  const [favoriteMovies, setFavoriteMovies] = useState<any>([]);
+  const [favoriteMovies, setFavoriteMovies] = useState<IMovieDetailsProps[]>(
+    [],
+  );
 
   const getProfileData = async () => {
     const querySnapshot = await getDocs(movieRef);
@@ -30,6 +32,7 @@ export const UserProfile: React.FC = () => {
         movieIds.map((id) => getMovieById(id.toString())),
       );
       const movieData = movies.map((movie) => movie.data);
+      console.log(movieData);
       setFavoriteMovies(movieData);
     } catch (error) {
       alert(error);

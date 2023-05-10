@@ -1,18 +1,9 @@
 import React from 'react';
+import { IMovieDetailsProps } from '../../interfaces/MovieDetailsProps/MovieDetailsProps';
 // import { IMovieCardProps } from '../../interfaces/MovieCardProps';
 
 interface Props {
-  data: {
-    id: number;
-    title: string;
-    release_date: string;
-    poster_path: string;
-    name?: string;
-    genre_ids: number[];
-    vote_average: number;
-    first_air_date?: string;
-    backdrop_path: string;
-  }[];
+  data: IMovieDetailsProps[];
 }
 
 export const FavoriteMovies: React.FC<Props> = ({ data }) => {
