@@ -20,10 +20,14 @@ export const UserProfile: React.FC = () => {
     [],
   );
 
+  console.log(auth.currentUser);
+
   const getProfileData = async () => {
     const querySnapshot = await getDocs(movieRef);
     movieIds = querySnapshot.docs.map((doc) => doc.data().movie);
-    await getMoviesById(movieIds);
+    if (movieIds) {
+      await getMoviesById(movieIds);
+    }
   };
 
   const getMoviesById = async (movieIds: number[]) => {
@@ -60,11 +64,7 @@ export const UserProfile: React.FC = () => {
     <div className="text-white pt-12 pb-20 px-6 lg:px-24 xl:px-32">
       <UserDetails onClick={handleSignOut} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
-        {favoriteMovies.length > 0 ? (
-          <FavoriteMovies data={favoriteMovies} />
-        ) : (
-          <Loader />
-        )}
+        {favoriteMovies ? <FavoriteMovies data={favoriteMovies} /> : <Loader />}
         <WatchLaterMovies />
       </div>
     </div>

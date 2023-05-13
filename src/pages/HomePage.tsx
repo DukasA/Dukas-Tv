@@ -79,7 +79,7 @@ export const HomePage: React.FC = () => {
     }
   };
   return (
-    <div className="bg-[#1c1c1e]">
+    <div /* className="bg-[#1c1c1e]" */>
       <HomeBanner />
       {/* MAIN */}
       <div className="w-full h-full p-4 pr-2 lg:pl-[10%] lg:pr-[10%] md:pl-[5%] md:pr-[5%] sm:pr-[5%] sm:pl-[5%]">

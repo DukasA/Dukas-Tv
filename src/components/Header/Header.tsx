@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import NavLink from './NavLink';
-import { auth } from '../../firebase/index';
+import { User } from '@firebase/auth';
+import { useSelector } from 'react-redux';
 
 export const Header: React.FC = () => {
   const [isMobileHeaderVisible, setIsMobileHeaderVisible] =
@@ -12,6 +13,9 @@ export const Header: React.FC = () => {
   };
 
   const location = useLocation();
+
+  const user: User = useSelector((state: { user: User }) => state.user);
+  console.log('user:', user);
 
   return (
     <div
@@ -45,7 +49,7 @@ export const Header: React.FC = () => {
             <NavLink title="Series" type="noDropDown" link={'/series'} />
             <NavLink title="Cartoons" type="noDropDown" link={'/cartoons'} />
           </ul>
-          {auth.currentUser ? (
+          {user ? (
             <ul className="flex justify-center items-center">
               <NavLink title="Profile" type="login" link={'/user'} />
             </ul>
@@ -91,7 +95,7 @@ export const Header: React.FC = () => {
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
             </ul>
-            {auth.currentUser ? (
+            {user ? (
               <NavLink
                 title="Profile"
                 type="login"

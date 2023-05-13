@@ -27,6 +27,11 @@ export const BannerSlide: React.FC = () => {
     (state: { movies: IMovies }) => state.movies.homePageMovies,
   );
 
+  const getRandomMovie = () => {
+    return Math.floor(Math.random() * data.length);
+  };
+  const randomMovieFromData = data[getRandomMovie()];
+
   const getPathForBackDrop = (path: string) => {
     if (!path) {
       return 'https://curia.europa.eu/jcms/upload/docs/image/png/2022-07/no_image.png';
@@ -37,25 +42,28 @@ export const BannerSlide: React.FC = () => {
 
   return (
     <div className="w-full h-full relative">
-      {data[0] ? (
+      {randomMovieFromData ? (
         <>
           <div className=" bg-black/80 w-full h-full absolute top-0 left-0 z-1"></div>
           <img
-            src={getPathForBackDrop(data[0].backdrop_path)}
+            src={getPathForBackDrop(randomMovieFromData.backdrop_path)}
             className="w-full h-full object-cover z-0"
           />
           {/* BOTTOM SLIDER NAV */}
           <div className="flex justify-center items-center flex-col w-full md:w-auto md:block absolute bottom-[10%] left-0 md:pl-20 p-2">
             <span className="text-center text-gray-300 text-5xl md:text-5xl mb-6 md:m-0">
-              {data[0].title || data[0].name}
+              {randomMovieFromData.title || randomMovieFromData.name}
             </span>
             <div className="">
-              {data[0].genre_ids.map((id) => (
+              {randomMovieFromData.genre_ids.map((id) => (
                 <span
                   className="text-white text-[12px] md:text-[14px] opacity-[0.6]"
                   key={id}
                 >
-                  {id === data[0].genre_ids[data[0].genre_ids.length - 1]
+                  {id ===
+                  randomMovieFromData.genre_ids[
+                    randomMovieFromData.genre_ids.length - 1
+                  ]
                     ? genresData.find((genre) => genre.id === id)?.name
                     : genresData.find((genre) => genre.id === id)?.name + ','}
                 </span>
@@ -65,17 +73,19 @@ export const BannerSlide: React.FC = () => {
               </span>
 
               <span className="text-gray-400 text-sm mr-2 md:text-md md:mr-4">
-                Duration: {data[0].vote_average.toString().slice(0, 3)}
+                Duration:{' '}
+                {randomMovieFromData.vote_average.toString().slice(0, 3)}
               </span>
             </div>
             <div className="flex justify-center md:justify-start items-center flex-col md:flex-row ">
-              <BannerSlideBtn movieUrl={`/movie/${data[0].id}`} />
+              <BannerSlideBtn movieUrl={`/movie/${randomMovieFromData.id}`} />
               <div className="text-white flex flex-col md:ml-10 justify-center items-center">
                 <span className="text-gray-300 text-xl pt-9">
-                  Rating: {data[0].vote_average.toString().slice(0, 3)}
+                  Rating:{' '}
+                  {randomMovieFromData.vote_average.toString().slice(0, 3)}
                 </span>
                 <StarRatings
-                  rating={data[0].vote_average}
+                  rating={randomMovieFromData.vote_average}
                   starRatedColor="#1F80E0"
                   starEmptyColor="gray"
                   numberOfStars={10}

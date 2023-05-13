@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { auth } from '../firebase/index';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setNewUser } from '../store/reducers/userReducer';
 export const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  let user;
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        user = userCredential.user;
-        console.log(user);
+        dispatch(setNewUser(userCredential.user));
+        alert('User was created, please login');
         navigation('/log_in');
       })
       .catch((error) => {
