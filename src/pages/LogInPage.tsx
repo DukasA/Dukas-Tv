@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 import { auth } from '../firebase/index';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { setNewUser } from '../store/reducers/userReducer';
 
 export const LogInPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigate();
-  const dispatch = useDispatch();
-
+  let user;
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        dispatch(setNewUser(userCredential.user));
+        user = userCredential.user;
+        console.log(user);
         navigation('/user');
       })
       .catch((error) => {

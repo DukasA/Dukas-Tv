@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import NavLink from './NavLink';
-import { User } from '@firebase/auth';
-import { useSelector } from 'react-redux';
+import { auth } from '../../firebase';
+import { onAuthStateChanged, User } from '@firebase/auth';
 
 export const Header: React.FC = () => {
   const [isMobileHeaderVisible, setIsMobileHeaderVisible] =
@@ -12,10 +12,25 @@ export const Header: React.FC = () => {
     setIsMobileHeaderVisible(!isMobileHeaderVisible);
   };
 
-  const location = useLocation();
+  const [user, setUser] = useState<User | null>(null);
 
-  const user: User = useSelector((state: { user: User }) => state.user);
-  console.log('user:', user);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        console.log('app user:', user);
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  });
+
+  const location = useLocation();
 
   return (
     <div
@@ -49,7 +64,7 @@ export const Header: React.FC = () => {
             <NavLink title="Series" type="noDropDown" link={'/series'} />
             <NavLink title="Cartoons" type="noDropDown" link={'/cartoons'} />
           </ul>
-          {user ? (
+          {user !== null ? (
             <ul className="flex justify-center items-center">
               <NavLink title="Profile" type="login" link={'/user'} />
             </ul>
@@ -95,7 +110,7 @@ export const Header: React.FC = () => {
                 onClick={() => setIsMobileHeaderVisible(!isMobileHeaderVisible)}
               />
             </ul>
-            {user ? (
+            {user !== null ? (
               <NavLink
                 title="Profile"
                 type="login"
