@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { IMovieCreditsProps } from '../../interfaces/MovieDetailsProps/MovieCreditsProps';
 import { ActorCard } from '../ActorCard/ActorCard';
 import { BlockTitle } from '../BlockTitle/BlockTitle';
@@ -9,13 +10,15 @@ export const MovieCastList: React.FC<IMovieCreditsProps> = ({ cast }) => {
       <div className="mb-10">
         <BlockTitle title="Cast" />
       </div>
-      <div className="flex overflow-auto">
+      <div className="flex overflow-auto cursor-pointer">
         {cast.slice(0, 15).map((actor) => (
-          <ActorCard actor={actor} key={actor.name} />
+          <ActorCard actor={actor} key={actor.id} />
         ))}
       </div>
       <div className="flex text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer mt-2">
-        <span className="text-xl">Full Cast & Crew</span>
+        <Link to="/cast_crew">
+          <span className="text-xl">Full Cast & Crew</span>
+        </Link>
       </div>
     </div>
   );

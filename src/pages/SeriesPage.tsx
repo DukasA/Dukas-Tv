@@ -31,7 +31,6 @@ const SeriesPage: React.FC = () => {
           setIsLoading(false);
         });
       dispatch(setGenre('Genre'));
-      console.log('rerender');
     } catch (error) {
       alert(error);
     }
@@ -43,7 +42,6 @@ const SeriesPage: React.FC = () => {
       const response = await getTrendingSeriesByGenre(genre);
       dispatch(loadHomeMovies(response.data.results));
       dispatch(setGenre(genre));
-      console.log(response.data.results);
       setIsLoading(false);
     } catch (error) {
       alert(error);

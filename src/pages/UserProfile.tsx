@@ -20,8 +20,6 @@ export const UserProfile: React.FC = () => {
     [],
   );
 
-  console.log(auth.currentUser);
-
   const getProfileData = async () => {
     const querySnapshot = await getDocs(movieRef);
     movieIds = querySnapshot.docs.map((doc) => doc.data().movie);
@@ -36,7 +34,6 @@ export const UserProfile: React.FC = () => {
         movieIds.map((id) => getMovieById(id.toString())),
       );
       const movieData = movies.map((movie) => movie.data);
-      console.log(movieData);
       setFavoriteMovies(movieData);
     } catch (error) {
       alert(error);
@@ -58,8 +55,6 @@ export const UserProfile: React.FC = () => {
         alert(error.message);
       });
   };
-
-  console.log(favoriteMovies);
   return (
     <div className="text-white pt-12 pb-20 px-6 lg:px-24 xl:px-32">
       <UserDetails onClick={handleSignOut} />

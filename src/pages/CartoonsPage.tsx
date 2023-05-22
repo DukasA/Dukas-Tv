@@ -6,16 +6,16 @@ import GenresList from '../components/GenresList/GenresList';
 import { Loader } from '../components/Loader/Loader';
 import MoviesContainer from '../components/MoviesContainer/MoviesContainer';
 import { Pagination } from '../components/Pagination/Pagination';
-import { IMovieCardProps } from '../interfaces/MovieCardProps';
+// import { IMovieCardProps } from '../interfaces/MovieCardProps';
 import { setGenre } from '../store/reducers/genreReducer';
 import { loadHomeMovies } from '../store/reducers/moviesReducer';
 import { setPageName } from '../store/reducers/moviesReducer';
 import { RootState } from '../store/store';
 
-interface IMovies {
+/* interface IMovies {
   movies: IMovieCardProps[];
   pageName: string;
-}
+} */
 
 const CartoonsPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -26,9 +26,9 @@ const CartoonsPage: React.FC = () => {
   const scrollElement = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const pageName = useSelector(
+  /* const pageName = useSelector(
     (state: { movies: IMovies }) => state.movies.pageName,
-  );
+  ); */
 
   useEffect(() => {
     try {
@@ -46,7 +46,6 @@ const CartoonsPage: React.FC = () => {
       alert(error);
     }
   }, [page]);
-  console.log(pageName);
 
   const handleGenreChange = async (genre: string) => {
     try {

@@ -8,3 +8,5 @@ export const MOVIE_DETAILS_ROUTE = '/movie/:id';
 export const SIGN_UP_ROUTE = '/sign_up';
 export const LOG_IN_ROUTE = '/log_in';
 export const USER_PROFILE_ROUTE = '/user';
+export const CAST_CREW_ROUTE = '/cast_crew';
+export const PERSON_DETAILS_PAGE = '/person/:id';

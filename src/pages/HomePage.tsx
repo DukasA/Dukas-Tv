@@ -39,7 +39,7 @@ export const HomePage: React.FC = () => {
           setIsLoading(false);
         });
     } catch (error) {
-      console.log('Error:' + error);
+      alert('Error:' + error);
     }
     /* } */
   }, [page]);

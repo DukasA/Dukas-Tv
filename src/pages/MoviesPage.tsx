@@ -32,7 +32,7 @@ export const MoviesPage: React.FC = () => {
           setIsLoading(false);
         });
     } catch (error) {
-      console.log('Error:' + error);
+      alert('Error:' + error);
     }
   }, []);
 
@@ -42,7 +42,6 @@ export const MoviesPage: React.FC = () => {
       const response = await getMoviesByGenre(genre);
       dispatch(loadHomeMovies(response.data.results));
       dispatch(setGenre(genre));
-      console.log(response.data.results);
       setIsLoading(false);
     } catch (error) {
       alert(error);

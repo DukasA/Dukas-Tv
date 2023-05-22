@@ -22,6 +22,9 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+// import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { loadMovieDetails } from '../store/reducers/movieDetails';
 // import { MovieSimilar } from '../components/MovieDetailsComponents/MovieRecomendations';
 
 interface ImagesProps {
@@ -30,6 +33,10 @@ interface ImagesProps {
   posters: [{ file_path: string }];
 }
 
+/* interface IMovies {
+  movieDetails: IMovieDetailsProps[];
+} */
+
 const MovieDetailsPage: React.FC = () => {
   const params = useParams<{ id: string }>();
   const movieId = params.id;
@@ -37,6 +44,11 @@ const MovieDetailsPage: React.FC = () => {
   const [images, setImages] = useState<ImagesProps | null>(null);
   const navigation = useNavigate();
   const user = auth.currentUser;
+  const dispatch = useDispatch();
+
+  /* const movieData: IMovieDetailsProps[] = useSelector(
+    (state: { movieDetails: IMovies }) => state.movieDetails.movieDetails,
+  ); */
 
   useEffect(() => {
     if (movieId) {
@@ -44,6 +56,7 @@ const MovieDetailsPage: React.FC = () => {
         getMovieById(movieId)
           .then((res) => {
             setData(res.data);
+            dispatch(loadMovieDetails(res.data));
             return axios.get(
               `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiConfig.API_KEY}`,
             );
@@ -61,9 +74,6 @@ const MovieDetailsPage: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(data);
-  console.log(images);
-
   const getPathForBackDrop = (path: string) => {
     if (!path) {
       return 'https://curia.europa.eu/jcms/upload/docs/image/png/2022-07/no_image.png';
@@ -75,7 +85,7 @@ const MovieDetailsPage: React.FC = () => {
   const addToFavoriteMovies = async () => {
     const usersRef = collection(db, 'users');
     const userDocRef = doc(usersRef, user?.uid);
-    const movie = data?.id;
+    const movie = params.id;
     try {
       const userDoc = await getDoc(userDocRef);
       const movieRef = collection(userDocRef, 'favoriteMovies');
@@ -88,18 +98,16 @@ const MovieDetailsPage: React.FC = () => {
           await addDoc(movieRef, {
             movie,
           });
-          console.log(
-            'Movie added siccessfully to collection "favoriteMovies"',
-          );
+          alert('Movie added siccessfully to collection "favoriteMovies"');
         } else {
-          console.log('Movie already exists in user collection.');
+          alert('Movie already exists in user collection.');
         }
       } else {
         await setDoc(userDocRef, {});
         await addDoc(movieRef, {
           movie,
         });
-        console.log(
+        alert(
           'added new user,added new movie to collection "favoriteMovies" successfully',
         );
       }
@@ -111,7 +119,7 @@ const MovieDetailsPage: React.FC = () => {
   const addToWatchLater = async () => {
     const usersRef = collection(db, 'users');
     const userDocRef = doc(usersRef, user?.uid);
-    const movie = data?.id;
+    const movie = params.id;
     try {
       const userDoc = await getDoc(userDocRef);
       const movieRef = collection(userDocRef, 'watchLater');
@@ -124,18 +132,16 @@ const MovieDetailsPage: React.FC = () => {
           await addDoc(movieRef, {
             movie,
           });
-          console.log(
-            'Movie added siccessfully to collection "watchLaterMovies"',
-          );
+          alert('Movie added siccessfully to collection "watchLaterMovies"');
         } else {
-          console.log('Movie already exists in user collection.');
+          alert('Movie already exists in user collection.');
         }
       } else {
         await setDoc(userDocRef, {});
         await addDoc(movieRef, {
           movie,
         });
-        console.log(
+        alert(
           'added new user,added new movie to collection "watchLaterMovies" successfully',
         );
       }
@@ -151,7 +157,6 @@ const MovieDetailsPage: React.FC = () => {
       </div>
     );
   }
-
   return (
     <div className="">
       {/* HERO SECTION */}

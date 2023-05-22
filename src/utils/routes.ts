@@ -18,8 +18,12 @@ import {
   SERIES_ROUTE,
   LOG_IN_ROUTE,
   USER_PROFILE_ROUTE,
+  CAST_CREW_ROUTE,
+  PERSON_DETAILS_PAGE,
 } from './routesConsts';
 import { UserProfile } from '../pages/UserProfile';
+import { CastAndCrewPage } from '../pages/CastAndCrewPage';
+import { PersonDetailsPage } from '../pages/PersonDetailsPage';
 
 export const publicRoutes = [
   {
@@ -57,6 +61,14 @@ export const publicRoutes = [
   {
     path: LOG_IN_ROUTE,
     Component: LogInPage,
+  },
+  {
+    path: CAST_CREW_ROUTE,
+    Component: CastAndCrewPage,
+  },
+  {
+    path: PERSON_DETAILS_PAGE,
+    Component: PersonDetailsPage,
   },
 ];
 

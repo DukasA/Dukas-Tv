@@ -18,10 +18,9 @@ export const Header: React.FC = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log('app user:', user);
         // ...
       } else {
-        // User is signed out
+        setUser(null);
         // ...
       }
     });
