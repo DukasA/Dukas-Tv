@@ -15,6 +15,7 @@ interface IMovie {
   vote_average: number;
   first_air_date?: string;
   backdrop_path: string;
+  media_type: string;
 }
 
 interface IMovies {
@@ -50,8 +51,8 @@ export const BannerSlide: React.FC = () => {
             className="w-full h-full object-cover z-0"
           />
           {/* BOTTOM SLIDER NAV */}
-          <div className="flex justify-center items-center flex-col w-full md:w-auto md:block absolute bottom-[10%] left-0 md:pl-20 p-2">
-            <span className="text-center text-gray-300 text-5xl md:text-5xl mb-6 md:m-0">
+          <div className="flex justify-center items-center flex-col w-full md:w-auto md:block absolute bottom-[2%] md:bottom-[20%] left-0 md:pl-20 p-2">
+            <span className="text-center text-gray-300 text-3xl md:text-5xl mb-3 md:m-0">
               {randomMovieFromData.title || randomMovieFromData.name}
             </span>
             <div className="">
@@ -78,7 +79,13 @@ export const BannerSlide: React.FC = () => {
               </span>
             </div>
             <div className="flex justify-center md:justify-start items-center flex-col md:flex-row ">
-              <BannerSlideBtn movieUrl={`/movie/${randomMovieFromData.id}`} />
+              <BannerSlideBtn
+                movieUrl={
+                  randomMovieFromData.media_type === 'tv'
+                    ? `/tv/` + randomMovieFromData.id
+                    : '/movie/' + randomMovieFromData.id
+                }
+              />
               <div className="text-white flex flex-col md:ml-10 justify-center items-center">
                 <span className="text-gray-300 text-xl pt-9">
                   Rating:{' '}

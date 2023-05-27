@@ -19,11 +19,13 @@ import {
   LOG_IN_ROUTE,
   USER_PROFILE_ROUTE,
   CAST_CREW_ROUTE,
-  PERSON_DETAILS_PAGE,
+  PERSON_DETAILS_ROUTE,
+  TV_DETAILS_ROUTE,
 } from './routesConsts';
 import { UserProfile } from '../pages/UserProfile';
 import { CastAndCrewPage } from '../pages/CastAndCrewPage';
 import { PersonDetailsPage } from '../pages/PersonDetailsPage';
+import TvDetailsPage from '../pages/TvDetailsPage';
 
 export const publicRoutes = [
   {
@@ -55,6 +57,10 @@ export const publicRoutes = [
     Component: MovieDetailsPage,
   },
   {
+    path: TV_DETAILS_ROUTE,
+    Component: TvDetailsPage,
+  },
+  {
     path: SIGN_UP_ROUTE,
     Component: SignUpPage,
   },
@@ -67,7 +73,7 @@ export const publicRoutes = [
     Component: CastAndCrewPage,
   },
   {
-    path: PERSON_DETAILS_PAGE,
+    path: PERSON_DETAILS_ROUTE,
     Component: PersonDetailsPage,
   },
 ];

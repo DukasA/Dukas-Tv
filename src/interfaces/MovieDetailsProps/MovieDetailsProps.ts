@@ -8,13 +8,14 @@ import { IMovieVideosPorps } from './MovieVideosPorps';
 export interface IMovieDetailsProps {
   id: number;
   title: string;
-  name?: string;
+  name: string;
   poster_path: string;
   backdrop_path: string;
   overview: string;
   vote_average: number;
   runtime: number;
-  release_date: string;
+  release_date?: string;
+  first_air_date?: string;
   status: string;
   revenue: number;
   budget: number;

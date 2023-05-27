@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { apiConfig } from '../api/apiConfig';
-import { getMovieById } from '../api/fetchData/movies/getMovieById';
 import { MovieMetaDataBlock } from '../components/MovieDetailsComponents/MovieMetaDataBlock';
 import { MovieMediaList } from '../components/MovieDetailsComponents/MovieMediaList';
 import MoviePlayer from '../components/MovieDetailsComponents/MoviePlayer';
@@ -25,6 +24,7 @@ import {
 // import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { loadMovieDetails } from '../store/reducers/movieDetails';
+import { getTvById } from '../api/fetchData/tv/getTvById';
 // import { MovieSimilar } from '../components/MovieDetailsComponents/MovieRecomendations';
 
 interface ImagesProps {
@@ -37,7 +37,7 @@ interface ImagesProps {
   movieDetails: IMovieDetailsProps[];
 } */
 
-const MovieDetailsPage: React.FC = () => {
+const TvDetailsPage: React.FC = () => {
   const params = useParams<{ id: string }>();
   const movieId = params.id;
   const [data, setData] = useState<IMovieDetailsProps | null>(null);
@@ -53,12 +53,13 @@ const MovieDetailsPage: React.FC = () => {
   useEffect(() => {
     if (movieId) {
       try {
-        getMovieById(movieId)
+        getTvById(movieId)
           .then((res) => {
             setData(res.data);
             dispatch(loadMovieDetails(res.data));
+            console.log(res.data);
             return axios.get(
-              `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiConfig.API_KEY}`,
+              `https://api.themoviedb.org/3/tv/${movieId}/images?api_key=${apiConfig.API_KEY}`,
             );
           })
           .then((response) => {
@@ -180,7 +181,7 @@ const MovieDetailsPage: React.FC = () => {
           {/* DESCRIPTION */}
           <div className="w-full p-5 md:w-[700px] absolute bottom-0 left-0 md:pl-20 md:pr-20 md:rounded-xl text-white bg-[black]/70">
             <h1 className="text-2xl md:text-5xl text-[#1F80E0] font-bold mb-2 md:mb-5 opacity-[0.9]">
-              {data.title}
+              {data.name}
             </h1>
             <p className="text-[11px] md:text-lg mb-2 md:mb-10 opacity-[0.9]">
               {data.overview}
@@ -193,7 +194,7 @@ const MovieDetailsPage: React.FC = () => {
             </div>
             <div className="flex flex-wrap items-center mb-2 md:mb-10">
               <span className="opacity-[0.9]">
-                {data.release_date?.slice(0, 4)}
+                {data.first_air_date?.slice(0, 4)}
               </span>
               <span className="m-5 mb-0 mt-0 text-[24px] text-[#1F80E0]">
                 &#x2022;
@@ -264,4 +265,4 @@ const MovieDetailsPage: React.FC = () => {
   );
 };
 
-export default MovieDetailsPage;
+export default TvDetailsPage;

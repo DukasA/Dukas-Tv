@@ -7,7 +7,9 @@ export const Layout: React.FC = () => {
   return (
     <div
       className={
-        location.pathname === '/' || location.pathname.startsWith('/movie/')
+        location.pathname === '/' ||
+        location.pathname.startsWith('/tv') ||
+        location.pathname.startsWith('/movie/')
           ? 'w-full min-h-[100vh] overflow-hidden'
           : 'w-full min-h-[100vh] pt-[50px] md:pt-[125px] overflow-hidden '
       }

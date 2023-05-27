@@ -52,7 +52,7 @@ export const PersonDetailsPage: React.FC = () => {
           {/* LEFT COL */}
           <div className="col-span-3">
             {/* AVATAR */}
-            <div className="w-full h-[300px] md:h-[450px] flex justify-center items-center md:block">
+            <div className="w-full h-[350px] md:h-[450px] flex justify-center items-center md:block">
               <img
                 src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${personData.profile_path}`}
                 alt={`Profile Image of ${personData.name}`}
@@ -60,45 +60,45 @@ export const PersonDetailsPage: React.FC = () => {
               />
             </div>
             {/* PERSONAL INFO */}
-            <div className="flex flex-col text-white mt-10">
+            <div className="flex flex-col justify-between items-center md:justify-start md:items-start text-white mt-10">
               <h3 className="text-3xl font-semibold mb-4">Personal info</h3>
               {/* KNOWN FOR */}
-              <div className="mb-2">
+              <div className="mb-2 text-center md:text-start">
                 <h4 className="text-2xl font-semibold">Known For</h4>
                 <span className="text-xl opacity-80">
                   {personData.known_for_department}
                 </span>
               </div>
               {/* KNOWN CREDITS */}
-              <div className="mb-2">
+              <div className="mb-2 text-center md:text-start">
                 <h4 className="text-2xl font-semibold">Known Credits</h4>
                 <span className="text-xl opacity-80">
                   {personData.combined_credits.cast.length}
                 </span>
               </div>
               {/* GENDER */}
-              <div className="mb-2">
+              <div className="mb-2 text-center md:text-start">
                 <h4 className="text-2xl font-semibold">Gender</h4>
                 <span className="text-xl opacity-80">
                   {personData.gender === 1 ? 'Female' : 'Male'}
                 </span>
               </div>
               {/* BIRTHDAY */}
-              <div className="mb-2">
+              <div className="mb-2 text-center md:text-start">
                 <h4 className="text-2xl font-semibold">Birthday</h4>
                 <span className="text-xl opacity-80">
                   {personData.birthday}
                 </span>
               </div>
               {/* PLACE OF BIRTH */}
-              <div className="mb-2">
+              <div className="mb-2 text-center md:text-start">
                 <h4 className="text-2xl font-semibold">Place of Birth</h4>
                 <span className="text-xl opacity-80">
                   {personData.place_of_birth}
                 </span>
               </div>
               {/* KNOWN AS */}
-              <div>
+              <div className="text-center md:text-start">
                 <h4 className="text-2xl font-semibold">Also Known As</h4>
                 <div className="flex flex-col">
                   {personData.also_known_as.map((name) => (

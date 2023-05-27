@@ -13,7 +13,9 @@ const getPathForImage = (path: string) => {
 
 export const MovieListCard: React.FC<IMovieCardProps> = ({ movie }) => {
   return (
-    <Link to={`/movie/` + movie.id}>
+    <Link
+      to={movie.media_type === 'tv' ? `/tv/` + movie.id : '/movie/' + movie.id}
+    >
       <div className="w-[160px] sm:mr-2 md:w-auto" key={movie.id}>
         <div className="rounded-lg overflow-hidden">
           <div className="w-full h-60 md:h-80 relative">

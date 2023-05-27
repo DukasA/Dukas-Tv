@@ -8,6 +8,7 @@ const GenresList: React.FC<IGenresListProps> = ({ onClick, value }) => {
   const location = useLocation();
 
   const handleChangeGanre = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    event.preventDefault();
     onClick(event.target.value);
   };
 
@@ -16,7 +17,7 @@ const GenresList: React.FC<IGenresListProps> = ({ onClick, value }) => {
       className={
         location.pathname === '/'
           ? 'mt-10 mb-10'
-          : 'flex justify-between items-center mt-10 mb-10'
+          : 'flex flex-col  md:flex md:justify-between ms:items-center mt-10 mb-10'
       }
     >
       <Title title={location.pathname.slice(1).toUpperCase()} />

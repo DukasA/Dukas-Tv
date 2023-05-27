@@ -9,5 +9,6 @@ export interface IMovieCardProps {
     vote_average: number;
     first_air_date?: string;
     backdrop_path: string;
+    media_type?: string;
   };
 }

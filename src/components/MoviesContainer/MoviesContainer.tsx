@@ -27,6 +27,8 @@ const MoviesContainer: React.FC = () => {
   if (data.length === 0) {
     return <h1 className="text-3xl text-white">Nothing not found</h1>;
   }
+
+  console.log(data);
   return (
     <div className="">
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-center">
