@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { IMovieReviewsProps } from '../../interfaces/MovieDetailsProps/MovieReviewsProps';
 import { formatDate } from '../../utils/formateDate';
 import { BlockTitle } from '../BlockTitle/BlockTitle';
@@ -49,7 +50,9 @@ export const MovieReviews: React.FC<IMovieReviewsProps> = ({ results }) => {
             </div>
           </div>
           <div className="flex text-[#1F80E0]/80 hover:text-[#1F80E0] relative hover:cursor-pointer mt-2">
-            <span className="text-xl">View All Reviews</span>
+            <Link to="/reviews">
+              <span className="text-xl">View All Reviews</span>
+            </Link>
           </div>
         </div>
       ) : (

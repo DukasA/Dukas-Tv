@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IMovieImagesPorps } from '../../interfaces/MovieDetailsProps/MovieImagesProps';
 import { BlockTitle } from '../BlockTitle/BlockTitle';
 
@@ -46,13 +47,15 @@ export const MovieMediaList: React.FC<IMovieImagesPorps> = ({
         >
           Posters <span className="text-white/50">{posters.length}</span>
         </span>
-        <span className="absolute top-12 right-0 md:top-2 text-[#1F80E0] cursor-pointer">
-          {backdropsIsVisible && !postersIsVisible
-            ? 'View All Backdrops'
-            : !backdropsIsVisible && postersIsVisible
-            ? 'View All Posters'
-            : ''}
-        </span>
+        <Link to="/movie_media">
+          <span className="absolute top-12 right-0 md:top-2 text-[#1F80E0] cursor-pointer">
+            {backdropsIsVisible && !postersIsVisible
+              ? 'View All Backdrops'
+              : !backdropsIsVisible && postersIsVisible
+              ? 'View All Posters'
+              : ''}
+          </span>
+        </Link>
       </div>
       <div className="flex overflow-auto">
         {postersIsVisible &&

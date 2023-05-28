@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { useNavigate } from 'react-router-dom';
 import { apiConfig } from '../api/apiConfig';
 import { getMovieById } from '../api/fetchData/movies/getMovieById';
 import { MovieMetaDataBlock } from '../components/MovieDetailsComponents/MovieMetaDataBlock';
@@ -22,10 +21,12 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-// import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { loadMovieDetails } from '../store/reducers/movieDetails';
-// import { MovieSimilar } from '../components/MovieDetailsComponents/MovieRecomendations';
+import {
+  loadMovieDetails,
+  loadMovieMedia,
+} from '../store/reducers/movieDetails';
+import { GoBackButton } from '../components/GoBackButton/GoBackButton';
 
 interface ImagesProps {
   backdrops: [{ file_path: string }];
@@ -33,22 +34,13 @@ interface ImagesProps {
   posters: [{ file_path: string }];
 }
 
-/* interface IMovies {
-  movieDetails: IMovieDetailsProps[];
-} */
-
 const MovieDetailsPage: React.FC = () => {
   const params = useParams<{ id: string }>();
   const movieId = params.id;
   const [data, setData] = useState<IMovieDetailsProps | null>(null);
   const [images, setImages] = useState<ImagesProps | null>(null);
-  const navigation = useNavigate();
   const user = auth.currentUser;
   const dispatch = useDispatch();
-
-  /* const movieData: IMovieDetailsProps[] = useSelector(
-    (state: { movieDetails: IMovies }) => state.movieDetails.movieDetails,
-  ); */
 
   useEffect(() => {
     if (movieId) {
@@ -63,6 +55,7 @@ const MovieDetailsPage: React.FC = () => {
           })
           .then((response) => {
             setImages(response.data);
+            dispatch(loadMovieMedia(response.data));
           });
       } catch (error) {
         alert(error);
@@ -165,12 +158,7 @@ const MovieDetailsPage: React.FC = () => {
           'w-full h-full md:h-[80vh] shadow-[0px_22px_30px_4px_rgba(0,0,0,0.56)]'
         }
       >
-        <div
-          className="absolute top-5 left-5 md:top-20 md:left-20 z-50 rounded-full overflow-hidden opacity-70 hover:opacity-100 hover:cursor-pointer"
-          onClick={() => navigation(-1)}
-        >
-          <img src="../../icons/back-button.svg" className="w-10 h-10" />
-        </div>
+        <GoBackButton />
         <div className="w-full h-[80vh] relative">
           <div className=" bg-black/[0.4] w-full h-full absolute top-0 left-0 z-1"></div>
           <img

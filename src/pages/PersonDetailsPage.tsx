@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { getPersonById } from '../api/fetchData/persons/getPersonById';
 import { Loader } from '../components/Loader/Loader';
 import { IPersonProps } from '../interfaces/PersonPorps';
@@ -26,9 +27,9 @@ export const PersonDetailsPage: React.FC = () => {
     }
   }, []);
 
-  /* useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  }, []); */
+  }, []);
 
   const getPathForImage = (path: string) => {
     if (!path) {
@@ -48,9 +49,9 @@ export const PersonDetailsPage: React.FC = () => {
   return (
     <div className="p-5 pt-16 md:p-20">
       {personData && (
-        <div className="grid grid-cols-1 md:grid-cols-12 md:gap-1">
+        <div className="flex justify-between flex-col md:flex-row">
           {/* LEFT COL */}
-          <div className="col-span-3">
+          <div className="">
             {/* AVATAR */}
             <div className="w-full h-[350px] md:h-[450px] flex justify-center items-center md:block">
               <img
@@ -60,7 +61,10 @@ export const PersonDetailsPage: React.FC = () => {
               />
             </div>
             {/* PERSONAL INFO */}
-            <div className="flex flex-col justify-between items-center md:justify-start md:items-start text-white mt-10">
+            <div className="bg-[#121212] p-2 rounded-xl overflow-hidden flex flex-col justify-between items-center md:justify-start md:items-start text-white mt-10">
+              <h1 className="text-4xl font-semibold visible mb-10 md:invisible">
+                {personData.name}
+              </h1>
               <h3 className="text-3xl font-semibold mb-4">Personal info</h3>
               {/* KNOWN FOR */}
               <div className="mb-2 text-center md:text-start">
@@ -109,8 +113,10 @@ export const PersonDetailsPage: React.FC = () => {
             </div>
           </div>
           {/* RIGTH COL */}
-          <div className="text-white col-span-1 mt-20 md:mt-0 md:col-span-8 flex justify-center items-center md:block">
-            <h1 className="text-4xl font-semibold">{personData.name}</h1>
+          <div className="text-white justify-center items-center md:ml-10 overflow-hidden">
+            <h1 className="text-4xl font-semibold invisible md:visible">
+              {personData.name}
+            </h1>
             {/* BIOGRAPHY */}
             <div className="mt-10">
               <div className="bg-[#121212] p-2 rounded-xl overflow-hidden">
@@ -127,12 +133,26 @@ export const PersonDetailsPage: React.FC = () => {
               <div className="bg-[#121212] p-2 rounded-xl overflow-hidden">
                 <h3 className="text-2xl mb-4">Known for</h3>
                 <div className="flex overflow-auto">
-                  {personData.combined_credits.cast.map((movie) => (
-                    <img
-                      src={getPathForImage(movie.poster_path)}
-                      className="rounded-xl shadow-xl object-cover w-[220px] h-[200px] mr-2"
-                    />
-                  ))}
+                  {personData.combined_credits.cast
+                    .slice(0, 15)
+                    .map((movie) => (
+                      <Link
+                        to={
+                          movie.media_type === 'tv'
+                            ? '/tv/' + movie.id
+                            : '/movie/' + movie.id
+                        }
+                      >
+                        <div className="w-[150px] mr-2">
+                          <img
+                            src={getPathForImage(movie.poster_path)}
+                            className="rounded-xl shadow-xl object-cover w-[220px] h-[200px] mr-2 hover:opacity-70"
+                          />
+                          <h5>{movie.name && movie.name}</h5>
+                          <h5>{movie.title && movie.title}</h5>
+                        </div>
+                      </Link>
+                    ))}
                 </div>
               </div>
             </div>

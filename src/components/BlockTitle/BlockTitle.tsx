@@ -5,5 +5,5 @@ interface IBlockTitleProps {
 }
 
 export const BlockTitle: React.FC<IBlockTitleProps> = ({ title }) => {
-  return <h3 className="text-3xl ">{title}</h3>;
+  return <h3 className="text-3xl text-white">{title}</h3>;
 };

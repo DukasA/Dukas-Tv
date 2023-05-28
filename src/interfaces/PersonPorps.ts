@@ -18,6 +18,7 @@ export interface IPersonProps {
         poster_path: string;
         name?: string;
         title?: string;
+        media_type: string;
       },
     ];
   };

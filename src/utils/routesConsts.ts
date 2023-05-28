@@ -11,3 +11,5 @@ export const USER_PROFILE_ROUTE = '/user';
 export const CAST_CREW_ROUTE = '/cast_crew';
 export const PERSON_DETAILS_ROUTE = '/person/:id';
 export const TV_DETAILS_ROUTE = '/tv/:id';
+export const REVIEWS_ROUTE = '/reviews';
+export const MOVIE_MEDIA_PAGE = '/movie_media';

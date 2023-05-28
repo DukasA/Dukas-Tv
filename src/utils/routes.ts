@@ -21,11 +21,15 @@ import {
   CAST_CREW_ROUTE,
   PERSON_DETAILS_ROUTE,
   TV_DETAILS_ROUTE,
+  REVIEWS_ROUTE,
+  MOVIE_MEDIA_PAGE,
 } from './routesConsts';
 import { UserProfile } from '../pages/UserProfile';
 import { CastAndCrewPage } from '../pages/CastAndCrewPage';
 import { PersonDetailsPage } from '../pages/PersonDetailsPage';
 import TvDetailsPage from '../pages/TvDetailsPage';
+import { ReviewsPage } from '../pages/ReviewsPage';
+import MovieMediaPage from '../pages/MovieMediaPage';
 
 export const publicRoutes = [
   {
@@ -75,6 +79,14 @@ export const publicRoutes = [
   {
     path: PERSON_DETAILS_ROUTE,
     Component: PersonDetailsPage,
+  },
+  {
+    path: REVIEWS_ROUTE,
+    Component: ReviewsPage,
+  },
+  {
+    path: MOVIE_MEDIA_PAGE,
+    Component: MovieMediaPage,
   },
 ];
 
