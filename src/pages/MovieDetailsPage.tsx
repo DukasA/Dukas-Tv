@@ -27,6 +27,7 @@ import {
   loadMovieMedia,
 } from '../store/reducers/movieDetails';
 import { GoBackButton } from '../components/GoBackButton/GoBackButton';
+import { Modal } from '../components/Modal/Modal';
 
 interface ImagesProps {
   backdrops: [{ file_path: string }];
@@ -41,6 +42,8 @@ const MovieDetailsPage: React.FC = () => {
   const [images, setImages] = useState<ImagesProps | null>(null);
   const user = auth.currentUser;
   const dispatch = useDispatch();
+  const [modalIsShown, setModalIsShown] = useState<boolean>(false);
+  const [modalInfo, setModalInfo] = useState<[string, string]>(['', '']); // we always have 2 arguments for modalInfo(first - modal message, second - modalCharacter);
 
   useEffect(() => {
     if (movieId) {
@@ -76,70 +79,100 @@ const MovieDetailsPage: React.FC = () => {
   };
 
   const addToFavoriteMovies = async () => {
-    const usersRef = collection(db, 'users');
-    const userDocRef = doc(usersRef, user?.uid);
-    const movie = params.id;
-    try {
-      const userDoc = await getDoc(userDocRef);
-      const movieRef = collection(userDocRef, 'favoriteMovies');
+    if (user) {
+      const usersRef = collection(db, 'users');
+      const userDocRef = doc(usersRef, user?.uid);
+      const movie = params.id;
+      try {
+        const userDoc = await getDoc(userDocRef);
+        const movieRef = collection(userDocRef, 'favoriteMovies');
 
-      if (userDoc.exists()) {
-        const querySnapshot = await getDocs(
-          query(movieRef, where('movie', '==', movie)),
-        );
-        if (querySnapshot.empty) {
+        if (userDoc.exists()) {
+          const querySnapshot = await getDocs(
+            query(movieRef, where('movie', '==', movie)),
+          );
+          if (querySnapshot.empty) {
+            await addDoc(movieRef, {
+              movie,
+            });
+            setModalInfo([
+              'Movie added successfully to collection "favorite movies"',
+              'Success',
+            ]);
+            setModalIsShown(true);
+          } else {
+            setModalInfo(['Movie already exists in your collection', 'Info']);
+            setModalIsShown(true);
+          }
+        } else {
+          await setDoc(userDocRef, {});
           await addDoc(movieRef, {
             movie,
           });
-          alert('Movie added siccessfully to collection "favoriteMovies"');
-        } else {
-          alert('Movie already exists in user collection.');
+          setModalInfo([
+            'Created new user,added new movie to collection "favorite movies" successfully',
+            'Success',
+          ]);
+          setModalIsShown(true);
         }
-      } else {
-        await setDoc(userDocRef, {});
-        await addDoc(movieRef, {
-          movie,
-        });
-        alert(
-          'added new user,added new movie to collection "favoriteMovies" successfully',
-        );
+      } catch (error) {
+        alert(error);
       }
-    } catch (error) {
-      alert(error);
+    } else {
+      setModalInfo([
+        'You can add a movie to your "favorite movies" collection only when you are authorized!',
+        'Error',
+      ]);
+      setModalIsShown(true);
     }
   };
 
   const addToWatchLater = async () => {
-    const usersRef = collection(db, 'users');
-    const userDocRef = doc(usersRef, user?.uid);
-    const movie = params.id;
-    try {
-      const userDoc = await getDoc(userDocRef);
-      const movieRef = collection(userDocRef, 'watchLater');
+    if (user) {
+      const usersRef = collection(db, 'users');
+      const userDocRef = doc(usersRef, user?.uid);
+      const movie = params.id;
+      try {
+        const userDoc = await getDoc(userDocRef);
+        const movieRef = collection(userDocRef, 'watchLater');
 
-      if (userDoc.exists()) {
-        const querySnapshot = await getDocs(
-          query(movieRef, where('movie', '==', movie)),
-        );
-        if (querySnapshot.empty) {
+        if (userDoc.exists()) {
+          const querySnapshot = await getDocs(
+            query(movieRef, where('movie', '==', movie)),
+          );
+          if (querySnapshot.empty) {
+            await addDoc(movieRef, {
+              movie,
+            });
+            setModalInfo([
+              'Movie added successfully to collection "watch later"',
+              'Info',
+            ]);
+            setModalIsShown(true);
+          } else {
+            setModalInfo(['Movie already exists in your collection.', 'Info']);
+            setModalIsShown(true);
+          }
+        } else {
+          await setDoc(userDocRef, {});
           await addDoc(movieRef, {
             movie,
           });
-          alert('Movie added siccessfully to collection "watchLaterMovies"');
-        } else {
-          alert('Movie already exists in user collection.');
+          setModalInfo([
+            'Created new user,added new movie to collection "watch later" successfully',
+            'Info',
+          ]);
+          setModalIsShown(true);
         }
-      } else {
-        await setDoc(userDocRef, {});
-        await addDoc(movieRef, {
-          movie,
-        });
-        alert(
-          'added new user,added new movie to collection "watchLaterMovies" successfully',
-        );
+      } catch (error) {
+        alert(error);
       }
-    } catch (error) {
-      alert(error);
+    } else {
+      setModalInfo([
+        'You can add a movie to your "watch later" collection only when you are authorized!',
+        'Error',
+      ]);
+      setModalIsShown(true);
     }
   };
 
@@ -152,6 +185,13 @@ const MovieDetailsPage: React.FC = () => {
   }
   return (
     <div className="">
+      {modalIsShown && (
+        <Modal
+          message={modalInfo[0]}
+          messageCharacter={modalInfo[1]}
+          onClick={() => setModalIsShown(!modalIsShown)}
+        />
+      )}
       {/* HERO SECTION */}
       <div
         className={

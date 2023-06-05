@@ -28,10 +28,10 @@ export const BannerSlide: React.FC = () => {
     (state: { movies: IMovies }) => state.movies.homePageMovies,
   );
 
-  const getRandomMovie = () => {
+  /* const getRandomMovie = () => {
     return Math.floor(Math.random() * data.length);
-  };
-  const randomMovieFromData = data[getRandomMovie()];
+  }; */
+  const randomMovieFromData: IMovie = data[0]; /* data[getRandomMovie()] */
 
   const getPathForBackDrop = (path: string) => {
     if (!path) {
