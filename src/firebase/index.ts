@@ -4,12 +4,7 @@ import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyABFMI44SnT5IJxZOOpaUxIIA0ZcG2jqAY',
-  authDomain: 'dukastv-9efab.firebaseapp.com',
-  projectId: 'dukastv-9efab',
-  storageBucket: 'dukastv-9efab.appspot.com',
-  messagingSenderId: '966993409164',
-  appId: '1:966993409164:web:883af69da207ab950af7a9',
+  // api config here
 };
 
 // Initialize Firebase
